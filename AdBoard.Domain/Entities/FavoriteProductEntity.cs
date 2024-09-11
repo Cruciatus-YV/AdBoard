@@ -11,6 +11,7 @@ public class FavoriteProductEntity : CreatableEntity<long>
     /// Идентификатор пользователя
     /// </summary>
     public required string UserId { get; set; }
+
     /// <summary>
     /// Идентификатор понравившегося товара
     /// </summary>

@@ -21,17 +21,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D4CB7BBB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{0102EB78-2B7F-4399-A376-BE982C0B66FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.AppServices", "AdBoard.AppServices\AdBoard.AppServices.csproj", "{19A5EEA0-885C-4E8C-BFED-69051529D356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.AppServices", "AdBoard.AppServices\AdBoard.AppServices.csproj", "{19A5EEA0-885C-4E8C-BFED-69051529D356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Contracts", "AdBoard.Contracts\AdBoard.Contracts.csproj", "{0860FC98-6251-42ED-B734-62F8FE6BCFE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.Contracts", "AdBoard.Contracts\AdBoard.Contracts.csproj", "{0860FC98-6251-42ED-B734-62F8FE6BCFE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Domain", "AdBoard.Domain\AdBoard.Domain.csproj", "{FF00FEF0-7CF3-4F73-9BB2-5C0685587DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.Domain", "AdBoard.Domain\AdBoard.Domain.csproj", "{FF00FEF0-7CF3-4F73-9BB2-5C0685587DAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.ComponentRegistrar", "AdBoard.ComponentRegistrar\AdBoard.ComponentRegistrar.csproj", "{7926C2AC-6C12-4675-8F78-7296A404AB98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.ComponentRegistrar", "AdBoard.ComponentRegistrar\AdBoard.ComponentRegistrar.csproj", "{7926C2AC-6C12-4675-8F78-7296A404AB98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Infrastructure", "AdBoard.Infrastructure\AdBoard.Infrastructure.csproj", "{6B7390D3-0A01-4A17-9DA9-974D515CABBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.Infrastructure", "AdBoard.Infrastructure\AdBoard.Infrastructure.csproj", "{6B7390D3-0A01-4A17-9DA9-974D515CABBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.DataAccess", "AdBoard.DataAccess\AdBoard.DataAccess.csproj", "{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdBoard.DataAccess", "AdBoard.DataAccess\AdBoard.DataAccess.csproj", "{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.DbMigrator", "AdBoard.DbMigrator\AdBoard.DbMigrator.csproj", "{598D0D53-3E96-494F-842A-E76EF3736A4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598D0D53-3E96-494F-842A-E76EF3736A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598D0D53-3E96-494F-842A-E76EF3736A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598D0D53-3E96-494F-842A-E76EF3736A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598D0D53-3E96-494F-842A-E76EF3736A4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{7926C2AC-6C12-4675-8F78-7296A404AB98} = {E335E38A-9E4A-4E85-B832-7EEEA83DDB7B}
 		{6B7390D3-0A01-4A17-9DA9-974D515CABBC} = {E335E38A-9E4A-4E85-B832-7EEEA83DDB7B}
 		{CF5AF6FA-CE02-43B5-9CDE-F3E2B867BDD3} = {E335E38A-9E4A-4E85-B832-7EEEA83DDB7B}
+		{598D0D53-3E96-494F-842A-E76EF3736A4E} = {E2A60AD4-7A43-47D6-ABA0-B7D9F33D7EEC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0047C75-A1A6-4C65-9130-43B81282D3CA}

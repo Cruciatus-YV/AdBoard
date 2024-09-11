@@ -10,37 +10,44 @@ public class OrderItemEntity : MutableEntity<long>
     /// <summary>
     /// Идентификатор товара
     /// </summary>
-    public required string ProductId { get; set; }
+    public required long ProductId { get; set; }
+
     /// <summary>
     /// Идентификатор заказа
     /// </summary>
-    public required string OrderId { get; set; }
+    public required long OrderId { get; set; }
+
     /// <summary>
     /// Цена на момент покупки
     /// </summary>
     public decimal? OrderPrice { get; set; }
+
     /// <summary>
     /// Количество товара в заказе
     /// </summary>
     public required double Count { get; set; }
+
     /// <summary>
     /// Единица измерения количества товара
     /// </summary>
     public required MesurementUnit MesurementUnit { get; set; }
+
     /// <summary>
     /// Форс-мажорные обстоятельства с товаром
     /// </summary>
     public OrderItemStatus? Status { get; set; }
+
     /// <summary>
     /// Флаг удаления из заказа
     /// </summary>
-    public bool IsDeleted { get; set; }
+    public required bool IsDeleted { get; set; }
 
 
     /// <summary>
     /// Заказ
     /// </summary>
     public virtual OrderEntity Order { get; set; }
+
     /// <summary>
     /// Товар
     /// </summary>

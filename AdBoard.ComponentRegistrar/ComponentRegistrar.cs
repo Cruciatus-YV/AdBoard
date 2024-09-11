@@ -1,18 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AdBoard.ComponentRegistrar
+namespace AdBoard.ComponentRegistrar;
+
+public static class ComponentRegistrar
 {
-    public static class ComponentRegistrar
+    public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            //TODO
-            return services;
-        }
+        //TODO
+        return services;
     }
 }

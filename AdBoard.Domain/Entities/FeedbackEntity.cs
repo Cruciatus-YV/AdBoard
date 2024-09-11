@@ -10,14 +10,17 @@ public class FeedbackEntity : CreatableEntity<long>
     /// Идентификатор автора отзыва
     /// </summary>
     public required string AuthorId { get; set; }
+
     /// <summary>
     /// Идентификатор товара
     /// </summary>
-    public required string ProductId { get; set; }
+    public required long ProductId { get; set; }
+
     /// <summary>
     /// Отзыв
     /// </summary>
     public string? Message { get; set; }
+
     /// <summary>
     /// Оценка
     /// </summary>
@@ -28,6 +31,7 @@ public class FeedbackEntity : CreatableEntity<long>
     /// Купленный товар
     /// </summary>
     public virtual ProductEntity Product { get; set; }
+
     /// <summary>
     /// Автор отзыва
     /// </summary>
