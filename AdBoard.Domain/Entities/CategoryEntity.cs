@@ -11,11 +11,12 @@ public class CategoryEntity : BaseEntity<long>
     /// Название категории
     /// </summary>
     public required string Name { get; set; }
+
+
     /// <summary>
     /// Идентификатор родительской категории
     /// </summary>
     public long? ParentId { get; set; }
-
 
     /// <summary>
     /// Подкатегории

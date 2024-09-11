@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdBoard.DbMigrator.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20240906151026_Init")]
+    [Migration("20240911072257_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("CategoryEntityId");
 
-                    b.ToTable("CategoryEntity");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.FavoriteProductEntity", b =>
@@ -72,7 +72,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("FavoriteProductEntity");
+                    b.ToTable("FavoriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.FeedbackEntity", b =>
@@ -93,11 +93,7 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("text");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("ProductId1")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
                     b.Property<byte>("Rating")
@@ -107,9 +103,9 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("FeedbackEntity");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.OrderEntity", b =>
@@ -142,7 +138,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("OrderEntity");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.OrderItemEntity", b =>
@@ -165,21 +161,13 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<int>("MesurementUnit")
                         .HasColumnType("integer");
 
-                    b.Property<string>("OrderId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("OrderId1")
+                    b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("OrderPrice")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("ProductId1")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
                     b.Property<int?>("Status")
@@ -190,11 +178,11 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItemEntity");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.ProductEntity", b =>
@@ -237,7 +225,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("ProductEntity");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
@@ -275,7 +263,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("StoreEntity");
+                    b.ToTable("Stores", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.UserEntity", b =>
@@ -296,7 +284,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.CategoryEntity", b =>
@@ -327,7 +315,7 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.HasOne("AdBoard.Domain.Entities.ProductEntity", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -358,14 +346,14 @@ namespace AdBoard.DbMigrator.Migrations
             modelBuilder.Entity("AdBoard.Domain.Entities.OrderItemEntity", b =>
                 {
                     b.HasOne("AdBoard.Domain.Entities.OrderEntity", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId1")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AdBoard.Domain.Entities.ProductEntity", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -399,6 +387,11 @@ namespace AdBoard.DbMigrator.Migrations
             modelBuilder.Entity("AdBoard.Domain.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("ChildCategories");
+                });
+
+            modelBuilder.Entity("AdBoard.Domain.Entities.OrderEntity", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>

@@ -11,10 +11,12 @@ public class UserEntity : BaseEntity<string>
     /// Имя пользователя
     /// </summary>
     public required string FirstName { get; set; }
+
     /// <summary>
     /// Фамилия пользователя
     /// </summary>
     public required string LastName { get; set; }
+
     /// <summary>
     /// Дата рождения пользователя
     /// </summary>
@@ -22,7 +24,7 @@ public class UserEntity : BaseEntity<string>
 
 
     /// <summary>
-    /// Магазины
+    /// Магазины, в которых работает пользователь
     /// </summary>
     public virtual List<StoreEntity> Stores { get; set; }
 }

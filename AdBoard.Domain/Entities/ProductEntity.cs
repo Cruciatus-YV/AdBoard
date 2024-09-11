@@ -12,33 +12,40 @@ public class ProductEntity : MutableEntity<long>
     /// Наименование товара
     /// </summary>
     public required string Name { get; set; }
+
     /// <summary>
     /// Название магазина
     /// </summary>
     public required long StoreId { get; set; }
+
     /// <summary>
     /// Название категории товара
     /// </summary>
     public required long CategoryId { get; set; }
+
     /// <summary>
     /// Описание товара
     /// </summary>
     public string? Description { get; set; }
+
     /// <summary>
     /// Цена товара
     /// </summary>
     public required decimal Price { get; set; }
+
     /// <summary>
     /// Количество товара на складе
     /// </summary>
     public required uint Count { get; set; }
+
     /// <summary>
     /// Статус товара
     /// </summary>
     public ProductStatus Status { get; set; }
 
+
     /// <summary>
-    /// Магазин
+    /// Магазин, которому принадлежит товар
     /// </summary>
     public virtual StoreEntity Store { get; set; }
 }

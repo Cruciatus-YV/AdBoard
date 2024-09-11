@@ -13,7 +13,7 @@ namespace AdBoard.DbMigrator.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CategoryEntity",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -24,16 +24,16 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryEntity", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CategoryEntity_CategoryEntity_CategoryEntityId",
+                        name: "FK_Categories_Categories_CategoryEntityId",
                         column: x => x.CategoryEntityId,
-                        principalTable: "CategoryEntity",
+                        principalTable: "Categories",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserEntity",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -43,11 +43,11 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEntity", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StoreEntity",
+                name: "Stores",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -62,17 +62,17 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StoreEntity", x => x.Id);
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StoreEntity_UserEntity_SellerId",
+                        name: "FK_Stores_Users_SellerId",
                         column: x => x.SellerId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderEntity",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -85,23 +85,23 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderEntity", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderEntity_StoreEntity_StoreId",
+                        name: "FK_Orders_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "StoreEntity",
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderEntity_UserEntity_ConsumerId",
+                        name: "FK_Orders_Users_ConsumerId",
                         column: x => x.ConsumerId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductEntity",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -118,17 +118,17 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductEntity", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductEntity_StoreEntity_StoreId",
+                        name: "FK_Products_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "StoreEntity",
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavoriteProductEntity",
+                name: "FavoriteProducts",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -139,128 +139,125 @@ namespace AdBoard.DbMigrator.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FavoriteProductEntity", x => x.Id);
+                    table.PrimaryKey("PK_FavoriteProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FavoriteProductEntity_ProductEntity_ProductId",
+                        name: "FK_FavoriteProducts_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "ProductEntity",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeedbackEntity",
+                name: "Feedbacks",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AuthorId = table.Column<string>(type: "text", nullable: false),
-                    ProductId = table.Column<string>(type: "text", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: true),
                     Rating = table.Column<byte>(type: "smallint", nullable: false),
-                    ProductId1 = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FeedbackEntity", x => x.Id);
+                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FeedbackEntity_ProductEntity_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "ProductEntity",
+                        name: "FK_Feedbacks_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FeedbackEntity_UserEntity_AuthorId",
+                        name: "FK_Feedbacks_Users_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItemEntity",
+                name: "OrderItems",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductId = table.Column<string>(type: "text", nullable: false),
-                    OrderId = table.Column<string>(type: "text", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    OrderId = table.Column<long>(type: "bigint", nullable: false),
                     OrderPrice = table.Column<decimal>(type: "numeric", nullable: true),
                     Count = table.Column<double>(type: "double precision", nullable: false),
                     MesurementUnit = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    OrderId1 = table.Column<long>(type: "bigint", nullable: false),
-                    ProductId1 = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItemEntity", x => x.Id);
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItemEntity_OrderEntity_OrderId1",
-                        column: x => x.OrderId1,
-                        principalTable: "OrderEntity",
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItemEntity_ProductEntity_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "ProductEntity",
+                        name: "FK_OrderItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryEntity_CategoryEntityId",
-                table: "CategoryEntity",
+                name: "IX_Categories_CategoryEntityId",
+                table: "Categories",
                 column: "CategoryEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteProductEntity_ProductId",
-                table: "FavoriteProductEntity",
+                name: "IX_FavoriteProducts_ProductId",
+                table: "FavoriteProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedbackEntity_AuthorId",
-                table: "FeedbackEntity",
+                name: "IX_Feedbacks_AuthorId",
+                table: "Feedbacks",
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedbackEntity_ProductId1",
-                table: "FeedbackEntity",
-                column: "ProductId1");
+                name: "IX_Feedbacks_ProductId",
+                table: "Feedbacks",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderEntity_ConsumerId",
-                table: "OrderEntity",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ConsumerId",
+                table: "Orders",
                 column: "ConsumerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderEntity_StoreId",
-                table: "OrderEntity",
+                name: "IX_Orders_StoreId",
+                table: "Orders",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItemEntity_OrderId1",
-                table: "OrderItemEntity",
-                column: "OrderId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItemEntity_ProductId1",
-                table: "OrderItemEntity",
-                column: "ProductId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductEntity_StoreId",
-                table: "ProductEntity",
+                name: "IX_Products_StoreId",
+                table: "Products",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StoreEntity_SellerId",
-                table: "StoreEntity",
+                name: "IX_Stores_SellerId",
+                table: "Stores",
                 column: "SellerId");
         }
 
@@ -268,28 +265,28 @@ namespace AdBoard.DbMigrator.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CategoryEntity");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "FavoriteProductEntity");
+                name: "FavoriteProducts");
 
             migrationBuilder.DropTable(
-                name: "FeedbackEntity");
+                name: "Feedbacks");
 
             migrationBuilder.DropTable(
-                name: "OrderItemEntity");
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "OrderEntity");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "ProductEntity");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "StoreEntity");
+                name: "Stores");
 
             migrationBuilder.DropTable(
-                name: "UserEntity");
+                name: "Users");
         }
     }
 }
