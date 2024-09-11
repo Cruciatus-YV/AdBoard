@@ -33,7 +33,7 @@ public class StoreConfigurations : IEntityTypeConfiguration<StoreEntity>
             .HasForeignKey(x => x.SellerId);
 
         builder.HasMany(x => x.Products)
-            .WithOne()
+            .WithOne(x => x.Store)
             .HasForeignKey(x => x.StoreId);
     }
 }
