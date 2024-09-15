@@ -1,6 +1,7 @@
 ﻿using AdBoard.Domain.Base;
 
 namespace AdBoard.Domain.Entities;
+
 /// <summary>
 /// Сущность отзыва на купленный товар
 /// </summary>

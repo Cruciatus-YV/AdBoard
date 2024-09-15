@@ -1,5 +1,8 @@
-﻿namespace AdBoard.AppServices.User.Repositories;
+﻿using AdBoard.AppServices.GenericRepository;
+using AdBoard.Domain.Entities;
 
-public interface IUserRepository
+namespace AdBoard.AppServices.User.Repositories;
+
+public interface IUserRepository : IGenericRepository<UserEntity, string>
 {
 }

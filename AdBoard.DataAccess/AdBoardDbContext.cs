@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AdBoard.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AdBoard.DataAccess;
 
@@ -13,7 +15,6 @@ public class AdBoardDbContext : DbContext
     /// </summary>
     public AdBoardDbContext(DbContextOptions options) : base(options)
     {
-        
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

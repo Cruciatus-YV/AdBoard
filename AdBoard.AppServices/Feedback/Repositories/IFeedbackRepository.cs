@@ -1,5 +1,8 @@
-﻿namespace AdBoard.AppServices.Feedback.Repositories;
+﻿using AdBoard.AppServices.GenericRepository;
+using AdBoard.Domain.Entities;
 
-public interface IFeedbackRepository
+namespace AdBoard.AppServices.Feedback.Repositories;
+
+public interface IFeedbackRepository : IGenericRepository<FeedbackEntity, long>
 {
 }

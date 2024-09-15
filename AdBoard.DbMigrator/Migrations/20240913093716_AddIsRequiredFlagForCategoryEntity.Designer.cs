@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdBoard.DbMigrator.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20240911135002_SomeConfigurationsFixes")]
-    partial class SomeConfigurationsFixes
+    [Migration("20240913093716_AddIsRequiredFlagForCategoryEntity")]
+    partial class AddIsRequiredFlagForCategoryEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace AdBoard.DbMigrator.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -218,17 +221,12 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<long>("StoreId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("StoreId1")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StoreId");
-
-                    b.HasIndex("StoreId1");
 
                     b.ToTable("Products", (string)null);
                 });
@@ -264,14 +262,9 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserEntityId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SellerId");
-
-                    b.HasIndex("UserEntityId");
 
                     b.ToTable("Stores", (string)null);
                 });
@@ -286,11 +279,13 @@ namespace AdBoard.DbMigrator.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -375,15 +370,9 @@ namespace AdBoard.DbMigrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.Entities.ProductEntity", b =>
                 {
-                    b.HasOne("AdBoard.Domain.Entities.StoreEntity", null)
+                    b.HasOne("AdBoard.Domain.Entities.StoreEntity", "Store")
                         .WithMany("Products")
                         .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AdBoard.Domain.Entities.StoreEntity", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -393,14 +382,10 @@ namespace AdBoard.DbMigrator.Migrations
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
                 {
                     b.HasOne("AdBoard.Domain.Entities.UserEntity", "Seller")
-                        .WithMany()
+                        .WithMany("Stores")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AdBoard.Domain.Entities.UserEntity", null)
-                        .WithMany("Stores")
-                        .HasForeignKey("UserEntityId");
 
                     b.Navigation("Seller");
                 });

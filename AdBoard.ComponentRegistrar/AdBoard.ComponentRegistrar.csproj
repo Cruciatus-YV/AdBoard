@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdBoard.AppServices\AdBoard.AppServices.csproj" />
+    <ProjectReference Include="..\AdBoard.DataAccess\AdBoard.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

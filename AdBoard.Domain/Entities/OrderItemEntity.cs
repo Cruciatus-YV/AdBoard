@@ -2,6 +2,7 @@
 using AdBoard.Domain.Base;
 
 namespace AdBoard.Domain.Entities;
+
 /// <summary>
 /// Сущность единицы товара из заказа
 /// </summary>

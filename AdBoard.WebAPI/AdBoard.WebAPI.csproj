@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdBoard.AppServices\AdBoard.AppServices.csproj" />
+    <ProjectReference Include="..\AdBoard.ComponentRegistrar\AdBoard.ComponentRegistrar.csproj" />
+    <ProjectReference Include="..\AdBoard.DataAccess\AdBoard.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

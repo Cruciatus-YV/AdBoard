@@ -1,5 +1,9 @@
-﻿namespace AdBoard.DataAccess.Repositories;
+﻿using AdBoard.AppServices.Order.Repositories;
+using AdBoard.AppServices.User.Repositories;
+using AdBoard.Domain.Entities;
 
-public class UserRepository
+namespace AdBoard.DataAccess.Repositories;
+
+public class UserRepository(AdBoardDbContext _dbContext) : GenericRepository<UserEntity, string>(_dbContext), IUserRepository
 {
 }

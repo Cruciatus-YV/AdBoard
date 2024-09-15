@@ -1,5 +1,8 @@
-﻿namespace AdBoard.DataAccess.Repositories;
+﻿using AdBoard.AppServices.Product.Repositories;
+using AdBoard.Domain.Entities;
 
-public class ProductRepository
+namespace AdBoard.DataAccess.Repositories;
+
+public class ProductRepository(AdBoardDbContext _dbContext) : GenericRepository<ProductEntity, long>(_dbContext), IProductRepository
 {
 }

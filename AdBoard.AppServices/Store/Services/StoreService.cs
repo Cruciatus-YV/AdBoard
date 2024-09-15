@@ -1,5 +1,13 @@
-﻿namespace AdBoard.AppServices.Store.Services;
+﻿using AdBoard.AppServices.Store.Repositories;
 
-public class StoreService
+namespace AdBoard.AppServices.Store.Services;
+
+public class StoreService : IStoreService
 {
+    private readonly IStoreRepository _storeRepository;
+
+    public StoreService(IStoreRepository storeRepository)
+    {
+        _storeRepository = storeRepository;
+    }
 }

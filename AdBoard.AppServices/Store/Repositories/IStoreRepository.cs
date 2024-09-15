@@ -1,5 +1,8 @@
-﻿namespace AdBoard.AppServices.Store.Repositories;
+﻿using AdBoard.AppServices.GenericRepository;
+using AdBoard.Domain.Entities;
 
-public interface IStoreRepository
+namespace AdBoard.AppServices.Store.Repositories;
+
+public interface IStoreRepository : IGenericRepository<StoreEntity, long>
 {
 }

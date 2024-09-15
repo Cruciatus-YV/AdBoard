@@ -19,6 +19,8 @@ public class CategoryConfigurations : IEntityTypeConfiguration<CategoryEntity>
         builder.Property(c => c.ParentId)
             .IsRequired(false);
 
+        builder.Property(c => c.IsDeleted)
+            .IsRequired();
 
         builder.HasMany(c => c.ChildCategories)
                .WithOne()

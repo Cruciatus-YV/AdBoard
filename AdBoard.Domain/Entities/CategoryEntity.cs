@@ -12,11 +12,16 @@ public class CategoryEntity : BaseEntity<long>
     /// </summary>
     public required string Name { get; set; }
 
-
     /// <summary>
     /// Идентификатор родительской категории
     /// </summary>
     public long? ParentId { get; set; }
+
+    /// <summary>
+    /// Флаг удаления категории
+    /// </summary>
+    public bool IsDeleted { get; set; }
+
 
     /// <summary>
     /// Подкатегории

@@ -1,25 +1,50 @@
+using AdBoard.ComponentRegistrar;
+using AdBoard.DataAccess;
+using Microsoft.EntityFrameworkCore;
+
+// Создание нового экземпляра `WebApplicationBuilder`.
+// Это начало настройки приложения, которое включает конфигурацию сервисов и параметров приложения.
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Добавляем сервисы в контейнер зависимостей.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Узнайте больше о конфигурации Swagger/OpenAPI по адресу https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+// Добавляем Swagger для генерации документации API
 builder.Services.AddSwaggerGen();
 
+// Регистрация пользовательских сервисов в контейнере зависимостей
+builder.Services.AddServices();
+
+// Настройка контекста базы данных для использования PostgreSQL
+builder.Services.AddDbContext<AdBoardDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionString"))
+);
+
+// Создание экземпляра приложения на основе настроек, заданных в `builder`.
+// Это завершает настройку и конфигурацию приложения и подготавливает его к запуску.
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Конфигурация конвейера обработки HTTP-запросов.
 if (app.Environment.IsDevelopment())
 {
+    // Включаем Swagger для отображения документации API в режиме разработки
     app.UseSwagger();
+
+    // Включаем интерфейс Swagger UI для взаимодействия с документацией API
     app.UseSwaggerUI();
 }
 
+// Включаем перенаправление с HTTP на HTTPS
 app.UseHttpsRedirection();
 
+// Включаем обработку авторизации
 app.UseAuthorization();
 
+// Маршрутизация запросов к контроллерам
 app.MapControllers();
 
+// Запуск приложения
 app.Run();

@@ -1,5 +1,8 @@
-﻿namespace AdBoard.AppServices.Order.Repositories;
+﻿using AdBoard.AppServices.GenericRepository;
+using AdBoard.Domain.Entities;
 
-public interface IOrderRepository
+namespace AdBoard.AppServices.Order.Repositories;
+
+public interface IOrderRepository : IGenericRepository<OrderEntity, long>
 {
 }

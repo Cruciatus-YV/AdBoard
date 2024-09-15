@@ -1,5 +1,13 @@
-﻿namespace AdBoard.AppServices.User.Services;
+﻿using AdBoard.AppServices.User.Repositories;
 
-public class UserService
+namespace AdBoard.AppServices.User.Services;
+
+public class UserService : IUserService
 {
+    private readonly IUserRepository _userRepository;
+
+    public UserService(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
 }

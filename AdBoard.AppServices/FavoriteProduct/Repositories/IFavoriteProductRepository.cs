@@ -1,5 +1,8 @@
-﻿namespace AdBoard.AppServices.FavoriteProduct.Repositories;
+﻿using AdBoard.AppServices.GenericRepository;
+using AdBoard.Domain.Entities;
 
-public interface IFavoriteProductRepository
+namespace AdBoard.AppServices.FavoriteProduct.Repositories;
+
+public interface IFavoriteProductRepository : IGenericRepository<FavoriteProductEntity, long>
 {
 }
