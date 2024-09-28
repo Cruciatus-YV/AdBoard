@@ -1,22 +1,22 @@
 ﻿namespace AdBoard.Contracts.Enums;
 
 /// <summary>
-/// Статус заказа
+/// Статус заказа.
 /// </summary>
 public enum OrderStatus
 {
     /// <summary>
-    /// Статус не определён
+    /// Статус не определён.
     /// </summary>
     None = 0,
 
     /// <summary>
-    /// Черновик заказа
+    /// Черновик заказа.
     /// </summary>
     Draft = 1,
 
     /// <summary>
-    /// Заказ опубликован
+    /// Заказ опубликован.
     /// </summary>
     Published = 2
 }

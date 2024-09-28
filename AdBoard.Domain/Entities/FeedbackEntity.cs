@@ -3,39 +3,37 @@
 namespace AdBoard.Domain.Entities;
 
 /// <summary>
-/// Сущность отзыва на купленный товар
+/// Сущность отзыва на купленный товар.
 /// </summary>
 public class FeedbackEntity : CreatableEntity<long>
 {
     /// <summary>
-    /// Идентификатор автора отзыва
+    /// Идентификатор автора отзыва.
     /// </summary>
     public required string AuthorId { get; set; }
 
     /// <summary>
-    /// Идентификатор товара
+    /// Идентификатор товара.
     /// </summary>
     public required long ProductId { get; set; }
 
     /// <summary>
-    /// Отзыв
+    /// Отзыв.
     /// </summary>
     public string? Message { get; set; }
 
     /// <summary>
-    /// Оценка
+    /// Оценка.
     /// </summary>
     public required byte Rating { get; set; }
 
-
     /// <summary>
-    /// Купленный товар
+    /// Купленный товар.
     /// </summary>
     public virtual ProductEntity Product { get; set; }
 
     /// <summary>
-    /// Автор отзыва
+    /// Автор отзыва.
     /// </summary>
     public virtual UserEntity Author { get; set; }
-
 }

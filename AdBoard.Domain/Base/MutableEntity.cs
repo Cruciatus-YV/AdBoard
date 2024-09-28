@@ -1,13 +1,15 @@
 ﻿namespace AdBoard.Domain.Base;
 
 /// <summary>
-/// Базовая сущность с временем создания и временем изменения
+/// Базовая сущность с временем создания и временем изменения.
+/// Наследует от <see cref="CreatableEntity{TId}"/> и добавляет свойство для хранения даты последнего изменения сущности.
 /// </summary>
-/// <typeparam name="TId">Тип данных идентификатора</typeparam>
+/// <typeparam name="TId">Тип данных идентификатора сущности.</typeparam>
 public abstract class MutableEntity<TId> : CreatableEntity<TId>
 {
     /// <summary>
-    /// Дата изменения сущности
+    /// Дата изменения сущности.
+    /// Значение устанавливается при изменении и по умолчанию инициализируется текущим временем в UTC.
     /// </summary>
-    public required DateTime UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

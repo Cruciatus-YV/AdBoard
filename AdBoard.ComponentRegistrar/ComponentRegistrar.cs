@@ -1,20 +1,21 @@
-﻿using AdBoard.AppServices.Category.Repositories;
-using AdBoard.AppServices.Category.Services;
-using AdBoard.AppServices.FavoriteProduct.Repositories;
-using AdBoard.AppServices.FavoriteProduct.Services;
-using AdBoard.AppServices.Feedback.Repositories;
-using AdBoard.AppServices.Feedback.Services;
+﻿using AdBoard.AppServices.Contexts.Category.Repositories;
+using AdBoard.AppServices.Contexts.Category.Services;
+using AdBoard.AppServices.Contexts.FavoriteProduct.Repositories;
+using AdBoard.AppServices.Contexts.FavoriteProduct.Services;
+using AdBoard.AppServices.Contexts.Feedback.Repositories;
+using AdBoard.AppServices.Contexts.Feedback.Services;
+using AdBoard.AppServices.Contexts.Order.Repositories;
+using AdBoard.AppServices.Contexts.Order.Services;
+using AdBoard.AppServices.Contexts.OrderItem.Repositories;
+using AdBoard.AppServices.Contexts.OrderItem.Services;
+using AdBoard.AppServices.Contexts.Product.Repositories;
+using AdBoard.AppServices.Contexts.Product.Services;
+using AdBoard.AppServices.Contexts.Product.SpecificationBuilder;
+using AdBoard.AppServices.Contexts.Store.Repositories;
+using AdBoard.AppServices.Contexts.Store.Services;
+using AdBoard.AppServices.Contexts.User.Repositories;
+using AdBoard.AppServices.Contexts.User.Services;
 using AdBoard.AppServices.GenericRepository;
-using AdBoard.AppServices.Order.Repositories;
-using AdBoard.AppServices.Order.Services;
-using AdBoard.AppServices.OrderItem.Repositories;
-using AdBoard.AppServices.OrderItem.Services;
-using AdBoard.AppServices.Product.Repositories;
-using AdBoard.AppServices.Product.Services;
-using AdBoard.AppServices.Store.Repositories;
-using AdBoard.AppServices.Store.Services;
-using AdBoard.AppServices.User.Repositories;
-using AdBoard.AppServices.User.Services;
 using AdBoard.DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,6 +43,7 @@ public static class ComponentRegistrar
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IProductSpecificationBuilder, ProductSpecificationBuilder>();
 
         services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped<IStoreService, StoreService>();

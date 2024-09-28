@@ -10,23 +10,28 @@ public class CategoryConfigurations : IEntityTypeConfiguration<CategoryEntity>
     {
         builder.ToTable("Categories");
 
-        builder.HasKey(c => c.Id);
+        builder.HasKey(category => category.Id);
 
-        builder.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(50);
+        builder.Property(category => category.Name)
+               .IsRequired()
+               .HasMaxLength(50);
 
-        builder.Property(c => c.ParentId)
-            .IsRequired(false);
+        builder.Property(category => category.ParentId)
+               .IsRequired(false);
 
-        builder.Property(c => c.IsDeleted)
-            .IsRequired();
+        builder.Property(category => category.IsDeleted)
+               .IsRequired();
 
-        builder.HasMany(c => c.ChildCategories)
-               .WithOne()
-               .HasForeignKey(c => c.ParentId)
+        builder.HasMany(category => category.Products)
+               .WithOne(product => product.Category)
+               .HasForeignKey(product => product.CategoryId)
                .OnDelete(DeleteBehavior.SetNull);
 
-        builder.HasIndex(c => c.ParentId);
+        builder.HasMany(category => category.ChildCategories)
+               .WithOne()
+               .HasForeignKey(category => category.ParentId)
+               .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasIndex(category => category.ParentId);
     }
 }

@@ -1,5 +1,4 @@
-﻿using AdBoard.AppServices.Order.Repositories;
-using AdBoard.AppServices.User.Repositories;
+﻿using AdBoard.AppServices.Contexts.User.Repositories;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.DataAccess.Repositories;

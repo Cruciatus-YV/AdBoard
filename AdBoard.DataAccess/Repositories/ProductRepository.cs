@@ -1,8 +1,118 @@
-﻿using AdBoard.AppServices.Product.Repositories;
+﻿using AdBoard.AppServices.Contexts.Product.Repositories;
+using AdBoard.AppServices.Exceptions;
+using AdBoard.AppServices.Specifications;
+using AdBoard.Contracts.Enums;
+using AdBoard.Contracts.Models.Entities.Product.Requests;
+using AdBoard.Contracts.Models.Entities.Product.Responses;
+using AdBoard.Contracts.Models.Entities.Store.Responses;
+using AdBoard.DataAccess.Extentions;
 using AdBoard.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdBoard.DataAccess.Repositories;
 
-public class ProductRepository(AdBoardDbContext _dbContext) : GenericRepository<ProductEntity, long>(_dbContext), IProductRepository
+public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
+    public async Task<bool> DeleteProductAsync(long id,
+                                               CancellationToken cancellationToken)
+    {
+        var target = await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Status != ProductStatus.Unavailable, cancellationToken);
+
+        if (target == null)
+        {
+            throw new EntityNotFoundException();
+        }
+
+        target.Status = ProductStatus.Unavailable;
+
+        return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+    }
+
+    public async Task<(bool, IReadOnlyCollection<long>?)> UpdateProductCountAsync(IReadOnlyCollection<ProductRequestBuyable> buyableProducts,
+                                                                                  CancellationToken cancellationToken)
+    {
+        var buyableProductsIds = buyableProducts.Select(x => x.Id).ToList();
+
+        // Загружаем все целевые товары сразу
+        var targets = await _dbSet.Where(x => buyableProductsIds.Contains(x.Id) && x.Status == ProductStatus.Available)
+                                  .ToListAsync(cancellationToken);
+
+        List<long> conflictedProducts = [];
+
+        foreach (var buyableProduct in buyableProducts)
+        {
+            var targetProduct = targets.FirstOrDefault(x => x.Id == buyableProduct.Id);
+
+            if (targetProduct == null)
+            {
+                // Если товар не найден, добавляем его в конфликтный список
+                conflictedProducts.Add(buyableProduct.Id);
+                continue;
+            }
+
+            // Проверяем, не станет ли количество товара отрицательным
+            if (targetProduct.Count + buyableProduct.Count < 0)
+            {
+                conflictedProducts.Add(buyableProduct.Id);
+            }
+            else
+            {
+                // Обновляем количество
+                targetProduct.Count += buyableProduct.Count;
+            }
+        }
+
+        // Если есть конфликтующие товары, возвращаем их идентификаторы
+        if (conflictedProducts.Count > 0)
+        {
+            return (false, conflictedProducts);
+        }
+
+        // Сохраняем изменения в базе данных
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return (true, null);
+    }
+
+    public async Task<List<ProductEntity>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
+                                                                                                   string sortBy,
+                                                                                                   bool ascending,
+                                                                                                   int pageNumber,
+                                                                                                   int pageSize,
+                                                                                                   CancellationToken cancellationToken)
+    {
+        var query = _asNoTracking.Where(specification.PredicateExpression);
+
+        var sortedQuery = IQueryableSortingExtention<ProductEntity>.ApplySorting(query, sortBy, ascending);
+
+        //                                      сделать дто
+        var paginatedQuery = await sortedQuery.Select(x => x).PaginationListAsync(pageNumber, pageSize, cancellationToken);
+
+        return paginatedQuery;
+    }
+    public async Task<ProductResponse?> GetFullInfoAsync(long id, CancellationToken cancellationToken)
+    {
+        var result = await _asNoTracking.Where(x => x.Id == id)
+                                        .Select(x => new ProductResponse
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Description = x.Description,
+            Count = x.Count,
+            Price = x.Price,
+            MeasurementUnit = x.MeasurementUnit,
+            Status = x.Status,
+            Store = new StoreDTO
+            {
+                Id = x.Store.Id,
+                Name = x.Store.Name,
+                Description = x.Store.Description,
+                IsDefault = x.Store.IsDefault,
+                SellerId = x.Store.SellerId,
+                Status = x.Store.Status
+            }
+        }).FirstOrDefaultAsync(cancellationToken);
+
+        return result;
+    }
 }

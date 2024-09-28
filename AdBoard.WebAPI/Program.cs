@@ -1,5 +1,6 @@
 using AdBoard.ComponentRegistrar;
 using AdBoard.DataAccess;
+using AdBoard.WebAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 // Создание нового экземпляра `WebApplicationBuilder`.
@@ -26,6 +27,10 @@ builder.Services.AddDbContext<AdBoardDbContext>(options =>
 // Создание экземпляра приложения на основе настроек, заданных в `builder`.
 // Это завершает настройку и конфигурацию приложения и подготавливает его к запуску.
 var app = builder.Build();
+
+// Добавляет промежуточное ПО для обработки исключений на уровне всего приложения.
+// Это позволяет перехватывать и обрабатывать необработанные исключения, возвращая клиенту понятный ответ.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Конфигурация конвейера обработки HTTP-запросов.
 if (app.Environment.IsDevelopment())

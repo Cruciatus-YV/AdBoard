@@ -13,27 +13,26 @@ public class StoreConfigurations : IEntityTypeConfiguration<StoreEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Name)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.IsDefault)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Status)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.SellerId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired(false);
-
+               .IsRequired(false);
 
         builder.HasOne(x => x.Seller)
-            .WithMany()
-            .HasForeignKey(x => x.SellerId);
+               .WithMany()
+               .HasForeignKey(x => x.SellerId);
 
         builder.HasMany(x => x.Products)
-            .WithOne(x => x.Store)
-            .HasForeignKey(x => x.StoreId);
+               .WithOne(x => x.Store)
+               .HasForeignKey(x => x.StoreId);
     }
 }

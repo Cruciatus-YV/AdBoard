@@ -1,5 +1,4 @@
-﻿using AdBoard.AppServices.FavoriteProduct.Repositories;
-using AdBoard.AppServices.OrderItem.Repositories;
+﻿using AdBoard.AppServices.Contexts.OrderItem.Repositories;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.DataAccess.Repositories;

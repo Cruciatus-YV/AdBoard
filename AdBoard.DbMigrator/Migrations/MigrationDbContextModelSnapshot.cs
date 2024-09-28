@@ -157,7 +157,7 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("MesurementUnit")
+                    b.Property<int>("MeasurementUnit")
                         .HasColumnType("integer");
 
                     b.Property<long>("OrderId")
@@ -195,14 +195,17 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Count")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Count")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<int>("MeasurementUnit")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -222,6 +225,8 @@ namespace AdBoard.DbMigrator.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("StoreId");
 
@@ -367,11 +372,19 @@ namespace AdBoard.DbMigrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.Entities.ProductEntity", b =>
                 {
+                    b.HasOne("AdBoard.Domain.Entities.CategoryEntity", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
                     b.HasOne("AdBoard.Domain.Entities.StoreEntity", "Store")
                         .WithMany("Products")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Store");
                 });
@@ -390,6 +403,8 @@ namespace AdBoard.DbMigrator.Migrations
             modelBuilder.Entity("AdBoard.Domain.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("ChildCategories");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.OrderEntity", b =>

@@ -13,30 +13,33 @@ public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Status)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Price)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.StoreId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Count)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(50);
+               .IsRequired()
+               .HasMaxLength(50);
 
         builder.Property(x => x.CategoryId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired(false);
-
+               .IsRequired(false);
 
         builder.HasOne(x => x.Store)
-            .WithMany(x => x.Products)
-            .HasForeignKey(x => x.StoreId);
+               .WithMany(x => x.Products)
+               .HasForeignKey(x => x.StoreId);
+
+        builder.HasOne(x => x.Category)
+               .WithMany(x => x.Products)
+               .HasForeignKey(x => x.CategoryId);
     }
 }

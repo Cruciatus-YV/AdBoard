@@ -1,20 +1,32 @@
 ﻿namespace AdBoard.Contracts.Enums;
 
 /// <summary>
-/// Статус магазина
+/// Статус магазина.
 /// </summary>
 public enum StoreStatus
 {
     /// <summary>
-    /// Статус не определён
+    /// Статус магазина не определён.
     /// </summary>
     None = 0,
+
     /// <summary>
-    /// Магазин функционирует
+    /// Магазин открыт и функционирует.
     /// </summary>
     Available = 1,
+
     /// <summary>
-    /// Магазин закрыт
+    /// Магазин закрыт и не работает.
     /// </summary>
     Unavailable = 2,
+
+    /// <summary>
+    /// Магазин забанен.
+    /// </summary>
+    Banned = 3,
+
+    /// <summary>
+    /// Магазин временно не работает
+    /// </summary>
+    TemporarilyUnavailable = 4,
 }

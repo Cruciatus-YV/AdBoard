@@ -13,34 +13,32 @@ public class OrderItemConfigurations : IEntityTypeConfiguration<OrderItemEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.ProductId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.OrderId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.OrderPrice)
-            .IsRequired(false);
+               .IsRequired(false);
 
         builder.Property(x => x.Count)
-            .IsRequired();
+               .IsRequired();
 
-        builder.Property(x => x.MesurementUnit)
-            .IsRequired();
+        builder.Property(x => x.MeasurementUnit)
+               .IsRequired();
 
         builder.Property(x => x.Status)
-            .IsRequired(false);
+               .IsRequired(false);
 
         builder.Property(x => x.IsDeleted)
-            .IsRequired();
-
+               .IsRequired();
 
         builder.HasOne(x => x.Order)
-            .WithMany(x => x.OrderItems)
-            .HasForeignKey(x => x.OrderId);
+               .WithMany(x => x.OrderItems)
+               .HasForeignKey(x => x.OrderId);
 
         builder.HasOne(x => x.Product)
-            .WithMany()
-            .HasForeignKey(x => x.ProductId);
-
+               .WithMany()
+               .HasForeignKey(x => x.ProductId);
     }
 }

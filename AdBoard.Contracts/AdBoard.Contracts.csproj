@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Entities\FavoriteProduct\Requests\" />
+    <Folder Include="Models\Entities\Feedback\Responses\" />
+    <Folder Include="Models\Entities\Feedback\Requests\" />
+    <Folder Include="Models\Entities\OrderItem\Responses\" />
+    <Folder Include="Models\Entities\OrderItem\Requests\" />
+    <Folder Include="Models\Entities\Order\Responses\" />
+    <Folder Include="Models\Entities\Order\Requests\" />
+  </ItemGroup>
+
 </Project>

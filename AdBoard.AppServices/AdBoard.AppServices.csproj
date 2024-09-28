@@ -16,4 +16,8 @@
     <ProjectReference Include="..\AdBoard.Domain\AdBoard.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Abp" Version="9.4.1" />
+  </ItemGroup>
+
 </Project>

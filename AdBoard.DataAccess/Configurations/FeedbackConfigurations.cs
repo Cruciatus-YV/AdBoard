@@ -13,25 +13,24 @@ public class FeedbackConfigurations : IEntityTypeConfiguration<FeedbackEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.AuthorId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.ProductId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Message)
-            .IsRequired(false)
-            .HasMaxLength(1000);
+               .IsRequired(false)
+               .HasMaxLength(1000);
 
         builder.Property(x => x.Rating)
-            .IsRequired();
-
+               .IsRequired();
 
         builder.HasOne(x => x.Product)
-            .WithMany()
-            .HasForeignKey(x => x.ProductId);
+               .WithMany()
+               .HasForeignKey(x => x.ProductId);
 
         builder.HasOne(x => x.Author)
-            .WithMany()
-            .HasForeignKey(x => x.AuthorId);
+               .WithMany()
+               .HasForeignKey(x => x.AuthorId);
     }
 }

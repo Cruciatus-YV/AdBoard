@@ -13,15 +13,15 @@ public class UserConfigurations : IEntityTypeConfiguration<UserEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.FirstName)
-            .HasMaxLength(100)
-            .IsRequired();
+               .HasMaxLength(100)
+               .IsRequired();
 
         builder.Property(x => x.LastName)
-            .HasMaxLength(100)
-            .IsRequired();
+               .HasMaxLength(100)
+               .IsRequired();
 
         builder.HasMany(x => x.Stores)
-            .WithOne(x => x.Seller)
-            .HasForeignKey(x => x.SellerId);
+               .WithOne(x => x.Seller)
+               .HasForeignKey(x => x.SellerId);
     }
 }
