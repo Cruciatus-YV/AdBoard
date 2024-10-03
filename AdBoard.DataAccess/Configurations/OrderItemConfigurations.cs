@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class OrderItemConfigurations : IEntityTypeConfiguration<OrderItemEntity>
 {

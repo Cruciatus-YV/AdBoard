@@ -66,7 +66,7 @@ public class CategoryService : ICategoryService
         }).ToList();
     }
 
-    public async Task<long> CreateAsync(CategoryRequestCreate model,
+    public async Task<long> CreateUnapprovedAsync(CategoryRequestCreate model,
                                         CancellationToken cancellationToken)
     {
         var entity = new CategoryEntity
@@ -95,5 +95,10 @@ public class CategoryService : ICategoryService
                                         CancellationToken cancellationToken)
     {
         return await _categoryRepository.DeleteCategoryAsync(id, cancellationToken);
+    }
+
+    public async Task<bool> ApproveAsync(long id, CancellationToken cancellationToken)
+    {
+        return await _categoryRepository.ApproveCategoryAsync(id, cancellationToken);
     }
 }

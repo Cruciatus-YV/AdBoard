@@ -1,8 +1,9 @@
 ﻿using AdBoard.AppServices.Exceptions;
 using AdBoard.Contracts.Models.Exceptions;
 using System.Net;
+using System.Security.Authentication;
 using System.Text.Json;
-using EntityNotFoundException = AdBoard.AppServices.Exceptions.EntityNotFoundException;
+using NotFoundException = AdBoard.AppServices.Exceptions.NotFoundException;
 
 namespace AdBoard.WebAPI.Middlewares
 {
@@ -11,13 +12,6 @@ namespace AdBoard.WebAPI.Middlewares
     /// </summary>
     public class ExceptionHandlingMiddleware
     {
-        private static readonly JsonSerializerOptions JsonSerializerOptions = new()
-        {
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All),
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
         private readonly RequestDelegate _next;
 
         /// <summary>
@@ -42,15 +36,15 @@ namespace AdBoard.WebAPI.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception e)
+            catch (Exception exeption)
             {
                 var logger = serviceProvider.GetService<ILogger<ExceptionHandlingMiddleware>>();
-                logger?.LogError(e, "Произошла ошибка: {ErrorMessage}", e.Message);
+                logger?.LogError(exeption, "Произошла ошибка: {ErrorMessage}", exeption.Message);
 
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int)GetStatusCode(e);
+                context.Response.StatusCode = (int)GetStatusCode(exeption);
 
-                var apiError = CreateApiError(e, context, environment);
+                var apiError = CreateApiError(exeption, context, environment);
                 await context.Response.WriteAsync(JsonSerializer.Serialize(apiError, JsonSerializerOptions));
             }
         }
@@ -63,7 +57,7 @@ namespace AdBoard.WebAPI.Middlewares
                 {
                     Code = ((int)HttpStatusCode.InternalServerError).ToString(),
                     Message = exception.Message,
-                    Description = exception.StackTrace,
+                    Description = exception.StackTrace ?? "Стек вызовов недоступен.",
                     TraceId = context.TraceIdentifier,
                 };
             }
@@ -77,27 +71,32 @@ namespace AdBoard.WebAPI.Middlewares
                     Message = humanReadableException.Message,
                     TraceId = context.TraceIdentifier,
                 },
-                EntityNotFoundException => new ApiErrorModel
-                {
-                    Code = ((int)HttpStatusCode.NotFound).ToString(),
-                    Message = "Сущность не была найдена.",
-                    TraceId = context.TraceIdentifier,
-                },
                 _ => new ApiErrorModel
                 {
                     Code = ((int)HttpStatusCode.InternalServerError).ToString(),
-                    Message = "Произошла непредвиденая ошибка.",
+                    Message = "Произошла непредвиденная ошибка.",
                     TraceId = context.TraceIdentifier,
                 }
             };
         }
 
+
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+        {
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All),
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         private HttpStatusCode GetStatusCode(Exception exception)
         {
             return exception switch
             {
-                EntityNotFoundException => HttpStatusCode.NotFound,
-                EntitiesNotFoundException => HttpStatusCode.NotFound,
+                NotFoundException => HttpStatusCode.NotFound,
+                EmailAlredyRegisteredException => HttpStatusCode.Conflict,
+                NoneMeasurementUnitException => HttpStatusCode.BadRequest,
+                InvalidCredsException => HttpStatusCode.BadRequest,
+                AccessDeniedException => HttpStatusCode.Forbidden,
                 _ => HttpStatusCode.InternalServerError,
             };
         }

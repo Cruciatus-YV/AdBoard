@@ -30,8 +30,10 @@ public interface ICategoryService
     /// <param name="model">Модель для создания категории.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Идентификатор созданной категории.</returns>
-    Task<long> CreateAsync(CategoryRequestCreate model,
+    Task<long> CreateUnapprovedAsync(CategoryRequestCreate model,
                            CancellationToken cancellationToken);
+
+    Task<bool> ApproveAsync(long id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновляет информацию о категории.
@@ -48,6 +50,7 @@ public interface ICategoryService
     /// <param name="id">Идентификатор категории.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>True, если категория была удалена; в противном случае False.</returns>
+   
     Task<bool> DeleteAsync(long id,
                            CancellationToken cancellationToken);
 }

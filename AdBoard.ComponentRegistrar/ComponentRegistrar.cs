@@ -13,10 +13,10 @@ using AdBoard.AppServices.Contexts.Product.Services;
 using AdBoard.AppServices.Contexts.Product.SpecificationBuilder;
 using AdBoard.AppServices.Contexts.Store.Repositories;
 using AdBoard.AppServices.Contexts.Store.Services;
-using AdBoard.AppServices.Contexts.User.Repositories;
 using AdBoard.AppServices.Contexts.User.Services;
 using AdBoard.AppServices.GenericRepository;
-using AdBoard.DataAccess.Repositories;
+using AdBoard.Infrastructure.Repositories;
+using AdBoard.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AdBoard.ComponentRegistrar;
@@ -48,8 +48,11 @@ public static class ComponentRegistrar
         services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped<IStoreService, StoreService>();
 
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<ITokenService, TokenService>();
+
+
 
 
         services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));

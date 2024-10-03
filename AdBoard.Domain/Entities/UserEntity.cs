@@ -1,11 +1,10 @@
-﻿using AdBoard.Domain.Base;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace AdBoard.Domain.Entities;
-
 /// <summary>
 /// Сущность пользователя
 /// </summary>
-public class UserEntity : BaseEntity<string>
+public class UserEntity : IdentityUser
 {
     /// <summary>
     /// Имя пользователя
@@ -21,7 +20,6 @@ public class UserEntity : BaseEntity<string>
     /// Дата рождения пользователя
     /// </summary>
     public DateOnly Birthday { get; set; }
-
 
     /// <summary>
     /// Магазины, в которых работает пользователь

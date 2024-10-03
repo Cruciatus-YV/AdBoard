@@ -1,9 +1,12 @@
 ﻿using AdBoard.AppServices.Contexts.Product.Repositories;
 using AdBoard.AppServices.Contexts.Product.SpecificationBuilder;
+using AdBoard.AppServices.Contexts.Store.Repositories;
 using AdBoard.AppServices.Exceptions;
 using AdBoard.Contracts.Enums;
+using AdBoard.Contracts.Models.Entities.Product;
 using AdBoard.Contracts.Models.Entities.Product.Requests;
 using AdBoard.Contracts.Models.Entities.Product.Responses;
+using AdBoard.Contracts.Models.Entities.User;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.AppServices.Contexts.Product.Services;
@@ -12,19 +15,36 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly IProductSpecificationBuilder _productSpecificationBuilder;
+    private readonly IStoreRepository _storeRepository;
 
     public ProductService(IProductRepository productRepository,
-                          IProductSpecificationBuilder productSpecificationBuilder)
+                          IProductSpecificationBuilder productSpecificationBuilder,
+                          IStoreRepository storeRepository)
     {
         _productRepository = productRepository;
         _productSpecificationBuilder = productSpecificationBuilder;
+        _storeRepository = storeRepository;
     }
 
-    public async Task<long> CreateAsync(ProductRequestCreate request, CancellationToken cancellationToken)
+    public async Task<long> CreateAsync(ProductRequestCreate request, UserContextLight userContext, CancellationToken cancellationToken)
     {
         if (request.MeasurementUnit == MeasurementUnit.None)
         {
-            throw new NoneMeasurementUnitException();
+            throw new NoneMeasurementUnitException("Не указана единица измерения количества товара");
+        }
+
+        var store = await _storeRepository.GetByPredicate(x => x.Id == request.StoreId, cancellationToken);
+
+        if (store == null)
+        {
+            throw new NotFoundException("Магазин не найден.");
+        }
+
+        else if (userContext.IsUser && store.SellerId != userContext.Id)
+        {
+
+            throw new AccessDeniedException("Доступ запрещён");
+
         }
 
         var entity = new ProductEntity
@@ -47,7 +67,7 @@ public class ProductService : IProductService
         return await _productRepository.DeleteProductAsync(id, cancellationToken);
     }
 
-    public async Task<List<ProductEntity>> GetByFilterAsync(ProductRequestSearch request, CancellationToken cancellationToken)
+    public async Task<List<ProductPageItemDto>> GetByFilterAsync(ProductRequestSearch request, CancellationToken cancellationToken)
     {
         var specification = _productSpecificationBuilder.Build(request);
         return await _productRepository.GetProductsBySpecificationWithSortingAndPaginationAsync(specification,
@@ -72,7 +92,7 @@ public class ProductService : IProductService
 
         if (target == null)
         {
-            throw new EntityNotFoundException();
+            throw new NotFoundException("Cущность не найдена.");
         }
 
         target.Name = request.Name;

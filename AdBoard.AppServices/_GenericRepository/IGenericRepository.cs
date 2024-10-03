@@ -20,8 +20,11 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="predicate">Предикат, определяющий условие для фильтрации сущностей.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>Список сущностей, удовлетворяющих условию предиката. Если сущностей не найдено, возвращается пустой список.</returns>
-    Task<List<TEntity>> GetByPredicate(Expression<Func<TEntity, bool>> predicate,
+    Task<List<TEntity>> GetListByPredicate(Expression<Func<TEntity, bool>> predicate,
                                        CancellationToken cancellationToken);
+
+    Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate,
+                                                    CancellationToken cancellationToken);
 
     /// <summary>
     /// Добавляет сущность.

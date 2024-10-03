@@ -1,10 +1,10 @@
 ﻿using AdBoard.AppServices.GenericRepository;
-using AdBoard.DataAccess.Extentions;
+using AdBoard.Infrastructure.Extentions;
 using AdBoard.Domain.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace AdBoard.DataAccess.Repositories;
+namespace AdBoard.Infrastructure.Repositories;
 
 public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId>
 {
@@ -25,11 +25,18 @@ public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> 
         return await _dbContext.FindAsync<TEntity>(id, cancellationToken);
     }
 
-    public async Task<List<TEntity>> GetByPredicate(Expression<Func<TEntity, bool>> predicate,
+    public async Task<List<TEntity>> GetListByPredicate(Expression<Func<TEntity, bool>> predicate,
                                                     CancellationToken cancellationToken)
     {
         return await _asNoTracking.Where(predicate)
                                   .ToListAsync(cancellationToken);
+    }
+
+    public async Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate,
+                                                    CancellationToken cancellationToken)
+    {
+        return await _asNoTracking.Where(predicate)
+                                  .FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<TId> InsertAsync(TEntity entity,

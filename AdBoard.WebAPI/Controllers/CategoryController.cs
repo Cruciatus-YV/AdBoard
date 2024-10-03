@@ -1,5 +1,8 @@
 ﻿using AdBoard.AppServices.Contexts.Category.Services;
 using AdBoard.Contracts.Models.Entities.Category.Requests;
+using AdBoard.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -12,7 +15,7 @@ namespace AdBoard.WebAPI.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryController : ControllerBase
+public class CategoryController : AdBoardBaseController
 {
     private readonly ICategoryService _categoryService;
 
@@ -39,8 +42,7 @@ public class CategoryController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 200 OK с хлебными крошками.</returns>
     [HttpGet("breadcrumbs/{id}")]
-    public async Task<IActionResult> GetBreadcrumbs(long id,
-                                                    CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBreadcrumbs(long id, CancellationToken cancellationToken)
     {
         return Ok(await _categoryService.GetBreadcrumbsByIdAsync(id, cancellationToken));
     }
@@ -52,11 +54,19 @@ public class CategoryController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 201 Created.</returns>
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] CategoryRequestCreate request,
-                                            CancellationToken cancellationToken)
+    [Authorize(Roles = "User, SuperManager, SuperAdmin")]
+    public async Task<IActionResult> ProposeToCreate([FromBody] CategoryRequestCreate request, CancellationToken cancellationToken)
     {
-        var result = await _categoryService.CreateAsync(request, cancellationToken);
+        var result = await _categoryService.CreateUnapprovedAsync(request, cancellationToken);
         return StatusCode((int)HttpStatusCode.Created, result);
+    }
+
+    [HttpPatch("approve")]
+    [Authorize(Roles = "SuperAdmin")]
+    public async Task<IActionResult> Approve(long id, CancellationToken cancellationToken)
+    {
+        await _categoryService.ApproveAsync(id, cancellationToken);
+        return Ok(new { Message = "Категория была одобрена." });
     }
 
     /// <summary>
@@ -80,8 +90,7 @@ public class CategoryController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 200 OK если категория удалена, иначе 404 Not Found.</returns>
     [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> Delete(long id,
-                                            CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
     {
         var result = await _categoryService.DeleteAsync(id, cancellationToken);
         return result ? Ok() : NotFound();

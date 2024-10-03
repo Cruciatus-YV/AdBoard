@@ -1,9 +1,12 @@
 ﻿namespace AdBoard.AppServices.Exceptions;
 
-public class NoneMeasurementUnitException : Exception
+public class NoneMeasurementUnitException : HumanReadableException
 {
-    public NoneMeasurementUnitException() : base("Не указана единица измерения количества товара")
+    public NoneMeasurementUnitException(string humanReadableMessage) : base(humanReadableMessage)
     {
+    }
 
+    public NoneMeasurementUnitException(string message, string humanReadableMessage) : base(message, humanReadableMessage)
+    {
     }
 }

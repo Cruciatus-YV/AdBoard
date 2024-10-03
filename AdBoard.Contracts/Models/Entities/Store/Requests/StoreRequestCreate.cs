@@ -2,12 +2,8 @@
 
 namespace AdBoard.Contracts.Models.Entities.Store.Requests;
 
-/// <summary>
-/// DTO для представления обновленной информации о магазине.
-/// </summary>
-public class UpdateStoreDTO
+public class StoreRequestCreate
 {
-    public long Id { get; set; }
     /// <summary>
     /// Название магазина.
     /// Если флаг IsDefault в состоянии true, то ФИО пользователя станет названием магазина.
@@ -25,7 +21,9 @@ public class UpdateStoreDTO
     public string? Description { get; set; }
 
     /// <summary>
-    /// Статус магазина.
+    /// По умолчанию при регистрации пользователя для него создаётся магазин с флагом IsDefault в состоянии true.
+    /// Таким образом пользователь сможет продавать товар от своего имени
+    /// У одного пользователя только один дефолтный магазин
     /// </summary>
-    public required StoreStatus Status { get; set; }
+    public bool IsDefault { get; set; }
 }

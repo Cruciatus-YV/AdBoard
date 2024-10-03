@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
 {
@@ -33,6 +33,10 @@ public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
 
         builder.Property(x => x.Description)
                .IsRequired(false);
+
+        builder.HasMany(x => x.Feedback)
+               .WithOne(x => x.Product)
+               .HasForeignKey(x => x.ProductId);
 
         builder.HasOne(x => x.Store)
                .WithMany(x => x.Products)

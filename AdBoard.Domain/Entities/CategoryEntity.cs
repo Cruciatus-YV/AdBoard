@@ -23,6 +23,11 @@ public class CategoryEntity : BaseEntity<long>
     public bool IsDeleted { get; set; }
 
     /// <summary>
+    /// Статус одобрения создания категории
+    /// </summary>
+    public bool Approved { get; set; }
+
+    /// <summary>
     /// Список продуктов категории.
     /// </summary>
     public virtual List<ProductEntity> Products { get; set; } = [];

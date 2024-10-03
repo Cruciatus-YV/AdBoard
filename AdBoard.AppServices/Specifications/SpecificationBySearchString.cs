@@ -21,7 +21,7 @@ public class SpecificationBySearchString<TEntity> : Specification<TEntity> where
     /// <param name="searchString">Поисковая строка.</param>
     public SpecificationBySearchString(string searchString, bool searchOnlyByName)
     {
-        _searchString = searchString?.ToLower();
+        _searchString = searchString.ToLower();
         _searchOnlyByName = searchOnlyByName;
     }
 

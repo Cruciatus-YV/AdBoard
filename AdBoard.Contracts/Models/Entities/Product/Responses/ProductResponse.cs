@@ -45,5 +45,5 @@ public class ProductResponse
     /// </summary>
     public ProductStatus Status { get; set; }
 
-    public StoreDTO Store { get; set; }
+    public StoreResponse Store { get; set; }
 }

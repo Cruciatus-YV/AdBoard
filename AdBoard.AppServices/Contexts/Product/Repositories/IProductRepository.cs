@@ -1,5 +1,6 @@
 ﻿using AdBoard.AppServices.GenericRepository;
 using AdBoard.AppServices.Specifications;
+using AdBoard.Contracts.Models.Entities.Product;
 using AdBoard.Contracts.Models.Entities.Product.Requests;
 using AdBoard.Contracts.Models.Entities.Product.Responses;
 using AdBoard.Domain.Entities;
@@ -40,7 +41,7 @@ public interface IProductRepository : IGenericRepository<ProductEntity, long>
     /// <param name="pageSize">Размер страницы (количество элементов на странице).</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список товаров, соответствующих предикату, с примененной сортировкой и пагинацией.</returns>
-    Task<List<ProductEntity>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
+    Task<List<ProductPageItemDto>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
                                                                                                    string sortBy,
                                                                                                    bool ascending,
                                                                                                    int pageNumber,

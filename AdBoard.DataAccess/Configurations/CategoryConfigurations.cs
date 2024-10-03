@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class CategoryConfigurations : IEntityTypeConfiguration<CategoryEntity>
 {
@@ -15,6 +15,9 @@ public class CategoryConfigurations : IEntityTypeConfiguration<CategoryEntity>
         builder.Property(category => category.Name)
                .IsRequired()
                .HasMaxLength(50);
+
+        builder.Property(category => category.Approved)
+               .IsRequired();
 
         builder.Property(category => category.ParentId)
                .IsRequired(false);

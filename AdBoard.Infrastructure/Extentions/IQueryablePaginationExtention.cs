@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AdBoard.DataAccess.Extentions;
+namespace AdBoard.Infrastructure.Extentions;
 
 /// <summary>
 /// Расширения для пагинации запросов IQueryable.

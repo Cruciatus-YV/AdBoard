@@ -5,11 +5,13 @@ using AdBoard.Contracts.Enums;
 using AdBoard.Contracts.Models.Entities.Product.Requests;
 using AdBoard.Contracts.Models.Entities.Product.Responses;
 using AdBoard.Contracts.Models.Entities.Store.Responses;
-using AdBoard.DataAccess.Extentions;
+using AdBoard.Infrastructure.Extentions;
 using AdBoard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using AdBoard.Contracts.Models.Entities.Product;
+using AdBoard.Contracts.Models.Entities.Category.Responses;
 
-namespace AdBoard.DataAccess.Repositories;
+namespace AdBoard.Infrastructure.Repositories;
 
 public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
@@ -20,7 +22,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
 
         if (target == null)
         {
-            throw new EntityNotFoundException();
+            throw new NotFoundException("Cущность не найдена.");
         }
 
         target.Status = ProductStatus.Unavailable;
@@ -33,7 +35,6 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
     {
         var buyableProductsIds = buyableProducts.Select(x => x.Id).ToList();
 
-        // Загружаем все целевые товары сразу
         var targets = await _dbSet.Where(x => buyableProductsIds.Contains(x.Id) && x.Status == ProductStatus.Available)
                                   .ToListAsync(cancellationToken);
 
@@ -45,36 +46,31 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
 
             if (targetProduct == null)
             {
-                // Если товар не найден, добавляем его в конфликтный список
                 conflictedProducts.Add(buyableProduct.Id);
                 continue;
             }
 
-            // Проверяем, не станет ли количество товара отрицательным
             if (targetProduct.Count + buyableProduct.Count < 0)
             {
                 conflictedProducts.Add(buyableProduct.Id);
             }
             else
             {
-                // Обновляем количество
                 targetProduct.Count += buyableProduct.Count;
             }
         }
 
-        // Если есть конфликтующие товары, возвращаем их идентификаторы
         if (conflictedProducts.Count > 0)
         {
             return (false, conflictedProducts);
         }
 
-        // Сохраняем изменения в базе данных
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return (true, null);
     }
 
-    public async Task<List<ProductEntity>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
+    public async Task<List<ProductPageItemDto>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
                                                                                                    string sortBy,
                                                                                                    bool ascending,
                                                                                                    int pageNumber,
@@ -85,8 +81,26 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
 
         var sortedQuery = IQueryableSortingExtention<ProductEntity>.ApplySorting(query, sortBy, ascending);
 
-        //                                      сделать дто
-        var paginatedQuery = await sortedQuery.Select(x => x).PaginationListAsync(pageNumber, pageSize, cancellationToken);
+        var paginatedQuery = await sortedQuery.Select(x => new ProductPageItemDto
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Price = x.Price,
+            MeasurementUnit = x.MeasurementUnit,
+            Category = new CategoryResponseLight
+            {
+                Id = x.Category.Id,
+                Name = x.Category.Name,
+                ParentId = x.Category.ParentId,
+                IsDeleted = x.Category.IsDeleted,
+            },
+            Count = x.Count,
+            Status = x.Status,
+            RatingSum = x.Feedback.Sum(x => x.Rating),
+            FeedbackCount = x.Feedback.Count,
+            StoreName = x.Store.Name,
+
+        }).PaginationListAsync(pageNumber, pageSize, cancellationToken);
 
         return paginatedQuery;
     }
@@ -94,24 +108,24 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
     {
         var result = await _asNoTracking.Where(x => x.Id == id)
                                         .Select(x => new ProductResponse
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Description = x.Description,
-            Count = x.Count,
-            Price = x.Price,
-            MeasurementUnit = x.MeasurementUnit,
-            Status = x.Status,
-            Store = new StoreDTO
-            {
-                Id = x.Store.Id,
-                Name = x.Store.Name,
-                Description = x.Store.Description,
-                IsDefault = x.Store.IsDefault,
-                SellerId = x.Store.SellerId,
-                Status = x.Store.Status
-            }
-        }).FirstOrDefaultAsync(cancellationToken);
+                                        {
+                                            Id = x.Id,
+                                            Name = x.Name,
+                                            Description = x.Description,
+                                            Count = x.Count,
+                                            Price = x.Price,
+                                            MeasurementUnit = x.MeasurementUnit,
+                                            Status = x.Status,
+                                            Store = new StoreResponse
+                                            {
+                                                Id = x.Store.Id,
+                                                Name = x.Store.Name,
+                                                Description = x.Store.Description,
+                                                IsDefault = x.Store.IsDefault,
+                                                SellerId = x.Store.SellerId,
+                                                Status = x.Store.Status
+                                            }
+                                        }).FirstOrDefaultAsync(cancellationToken);
 
         return result;
     }

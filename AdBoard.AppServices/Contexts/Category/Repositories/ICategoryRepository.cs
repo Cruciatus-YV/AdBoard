@@ -33,4 +33,6 @@ public interface ICategoryRepository : IGenericRepository<CategoryEntity, long>
     /// <returns>True, если категория была успешно удалена; в противном случае False.</returns>
     Task<bool> DeleteCategoryAsync(long id,
                                    CancellationToken cancellationToken);
+
+    Task<bool> ApproveCategoryAsync(long id, CancellationToken cancellationToken);
 }

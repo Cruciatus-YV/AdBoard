@@ -64,4 +64,6 @@ public class ProductEntity : MutableEntity<long>, IHaveCategoryId,
     /// Магазин, которому принадлежит товар.
     /// </summary>
     public virtual StoreEntity Store { get; set; }
+
+    public virtual List<FeedbackEntity> Feedback {  get; set; }
 }

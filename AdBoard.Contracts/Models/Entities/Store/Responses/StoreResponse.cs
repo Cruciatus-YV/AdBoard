@@ -6,7 +6,7 @@ namespace AdBoard.Contracts.Models.Entities.Store.Responses;
 /// DTO для представления информации о магазине.
 /// Используется для отображения основных данных о магазине в различных частях приложения.
 /// </summary>
-public class StoreDTO
+public class StoreResponse
 {
     /// <summary>
     /// Идентификатор магазина

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AdBoard.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace AdBoard.DbMigrator;
@@ -19,18 +20,19 @@ public class MigrationDbContextFactory : IDesignTimeDbContextFactory<MigrationDb
     public MigrationDbContext CreateDbContext(string[] args)
     {
         // Создание билдерa для конфигурации и добавление файла конфигурации
-        var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory()) // Убедитесь, что путь к файлу правильный
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
         var configuration = builder.Build();
 
         // Получение строки подключения из конфигурации
         var connectionString = configuration.GetConnectionString("ConnectionString");
 
         // Настройка опций контекста базы данных для использования PostgreSQL
-        var dbContextOptionsBuilder = new DbContextOptionsBuilder<MigrationDbContext>();
+        var dbContextOptionsBuilder = new DbContextOptionsBuilder<AdBoardDbContext>(); // Измените здесь на AdBoardDbContext
         dbContextOptionsBuilder.UseNpgsql(connectionString);
 
         // Создание и возврат экземпляра контекста базы данных с заданными опциями
         return new MigrationDbContext(dbContextOptionsBuilder.Options);
     }
 }
-
