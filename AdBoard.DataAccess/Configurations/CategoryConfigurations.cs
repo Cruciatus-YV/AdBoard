@@ -14,7 +14,7 @@ public class CategoryConfigurations : IEntityTypeConfiguration<CategoryEntity>
 
         builder.Property(category => category.Name)
                .IsRequired()
-               .HasMaxLength(50);
+               .HasMaxLength(255);
 
         builder.Property(category => category.Approved)
                .IsRequired();
