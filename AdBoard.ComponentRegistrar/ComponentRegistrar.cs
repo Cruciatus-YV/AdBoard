@@ -4,6 +4,8 @@ using AdBoard.AppServices.Contexts.FavoriteProduct.Repositories;
 using AdBoard.AppServices.Contexts.FavoriteProduct.Services;
 using AdBoard.AppServices.Contexts.Feedback.Repositories;
 using AdBoard.AppServices.Contexts.Feedback.Services;
+using AdBoard.AppServices.Contexts.File.Repositories;
+using AdBoard.AppServices.Contexts.File.Services;
 using AdBoard.AppServices.Contexts.Order.Repositories;
 using AdBoard.AppServices.Contexts.Order.Services;
 using AdBoard.AppServices.Contexts.OrderItem.Repositories;
@@ -15,6 +17,7 @@ using AdBoard.AppServices.Contexts.Store.Repositories;
 using AdBoard.AppServices.Contexts.Store.Services;
 using AdBoard.AppServices.Contexts.User.Services;
 using AdBoard.AppServices.GenericRepository;
+using AdBoard.DataAccess.Repositories;
 using AdBoard.Infrastructure.Repositories;
 using AdBoard.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +54,9 @@ public static class ComponentRegistrar
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<ITokenService, TokenService>();
+
+        services.AddScoped<IFileRepository, FileRepository>();
+        services.AddScoped<IFileService, FileService>();
 
 
 

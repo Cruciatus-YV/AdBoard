@@ -1,4 +1,4 @@
-﻿namespace AdBoard.Contracts.Models.Entities.User;
+﻿namespace AdBoard.Contracts.Models.Entities.User.Requests;
 
 public class UserRegisterRequest
 {

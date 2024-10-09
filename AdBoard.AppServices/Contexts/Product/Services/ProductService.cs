@@ -26,7 +26,7 @@ public class ProductService : IProductService
         _storeRepository = storeRepository;
     }
 
-    public async Task<long> CreateAsync(ProductRequestCreate request, UserContextLight userContext, CancellationToken cancellationToken)
+    public async Task<long> CreateAsync(ProductRequestCreate request, UserContextLightDto userContext, CancellationToken cancellationToken)
     {
         if (request.MeasurementUnit == MeasurementUnit.None)
         {

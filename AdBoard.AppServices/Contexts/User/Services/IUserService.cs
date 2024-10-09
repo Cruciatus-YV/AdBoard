@@ -1,4 +1,4 @@
-﻿using AdBoard.Contracts.Models.Entities.User;
+﻿using AdBoard.Contracts.Models.Entities.User.Requests;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.AppServices.Contexts.User.Services;

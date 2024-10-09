@@ -15,11 +15,6 @@ public class StoreRequestUpdate
     public required string Name { get; set; }
 
     /// <summary>
-    /// Идентификатор продавца.
-    /// </summary>
-    public required string SellerId { get; set; }
-
-    /// <summary>
     /// Описание магазина.
     /// </summary>
     public string? Description { get; set; }

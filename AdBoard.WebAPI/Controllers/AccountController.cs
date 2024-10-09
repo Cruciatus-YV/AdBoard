@@ -1,9 +1,6 @@
 ﻿using AdBoard.AppServices.Contexts.User.Services;
-using AdBoard.Contracts.Models.Entities.User;
-using AdBoard.Domain.Entities;
-using AdBoard.Services;
+using AdBoard.Contracts.Models.Entities.User.Requests;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.WebAPI.Controllers
@@ -21,9 +18,9 @@ namespace AdBoard.WebAPI.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request, CancellationToken cancellationToken)
         {
-            var result = await _accountService.RegisterAsync(request);
+            var result = await _accountService.RegisterAsync(request, cancellationToken);
 
             return Ok(new { message = "Регистрация успешна" });
         }

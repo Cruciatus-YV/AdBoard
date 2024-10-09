@@ -1,5 +1,5 @@
 ﻿using AdBoard.AppServices.Exceptions;
-using AdBoard.Contracts.Models.Entities.User;
+using AdBoard.Contracts.Models.Entities.User.Requests;
 using AdBoard.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 

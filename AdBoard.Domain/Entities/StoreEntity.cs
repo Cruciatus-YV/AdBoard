@@ -46,7 +46,4 @@ public class StoreEntity : MutableEntity<long>
     /// Продавец.
     /// </summary>
     public virtual UserEntity Seller { get; set; }
-
-    //DayOfWeek
-    //TimeZone
 }

@@ -10,13 +10,13 @@ using AdBoard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using AdBoard.Contracts.Models.Entities.Product;
 using AdBoard.Contracts.Models.Entities.Category.Responses;
+using AdBoard.Contracts.Models.Entities.User.Responses;
 
 namespace AdBoard.Infrastructure.Repositories;
 
 public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
-    public async Task<bool> DeleteProductAsync(long id,
-                                               CancellationToken cancellationToken)
+    public async Task<bool> DeleteProductAsync(long id, CancellationToken cancellationToken)
     {
         var target = await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Status != ProductStatus.Unavailable, cancellationToken);
 
@@ -71,11 +71,11 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
     }
 
     public async Task<List<ProductPageItemDto>> GetProductsBySpecificationWithSortingAndPaginationAsync(ISpecification<ProductEntity> specification,
-                                                                                                   string sortBy,
-                                                                                                   bool ascending,
-                                                                                                   int pageNumber,
-                                                                                                   int pageSize,
-                                                                                                   CancellationToken cancellationToken)
+                                                                                                        string sortBy,
+                                                                                                        bool ascending,
+                                                                                                        int pageNumber,
+                                                                                                        int pageSize,
+                                                                                                        CancellationToken cancellationToken)
     {
         var query = _asNoTracking.Where(specification.PredicateExpression);
 
@@ -122,8 +122,8 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
                                                 Name = x.Store.Name,
                                                 Description = x.Store.Description,
                                                 IsDefault = x.Store.IsDefault,
-                                                SellerId = x.Store.SellerId,
-                                                Status = x.Store.Status
+                                                Status = x.Store.Status,
+                                                Seller = new UserLigthResponse(x.Store.Seller.Id, x.Store.Seller.FirstName, x.Store.Seller.LastName, x.Store.Seller.Email)
                                             }
                                         }).FirstOrDefaultAsync(cancellationToken);
 

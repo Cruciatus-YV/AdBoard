@@ -1,4 +1,5 @@
 ﻿using AdBoard.Contracts.Enums;
+using AdBoard.Contracts.Models.Entities.User.Responses;
 
 namespace AdBoard.Contracts.Models.Entities.Store.Responses;
 
@@ -19,11 +20,6 @@ public class StoreResponse
     public required string Name { get; set; }
 
     /// <summary>
-    /// Идентификатор продавца.
-    /// </summary>
-    public required string SellerId { get; set; }
-
-    /// <summary>
     /// Описание магазина.
     /// </summary>
     public string? Description { get; set; }
@@ -39,4 +35,6 @@ public class StoreResponse
     /// У одного пользователя только один дефолтный магазин
     /// </summary>
     public bool IsDefault { get; set; }
+
+    public UserLigthResponse Seller { get; set; }
 }

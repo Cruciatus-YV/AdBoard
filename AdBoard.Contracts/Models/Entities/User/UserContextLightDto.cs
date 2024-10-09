@@ -1,6 +1,6 @@
 ﻿namespace AdBoard.Contracts.Models.Entities.User;
 
-public class UserContextLight(string id, string email, string role, DateOnly dateOfBirth)
+public class UserContextLightDto(string id, string email, string role, DateOnly dateOfBirth)
 {
     public string Id { get; } = id;
 

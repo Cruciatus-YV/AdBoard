@@ -7,11 +7,11 @@ namespace AdBoard.WebAPI.Controllers;
 
 public abstract class AdBoardBaseController : ControllerBase
 {
-    protected UserContextLight GetUserContextLigth()
+    protected UserContextLightDto GetUserContextLigth()
     {
-        if (User == null)
+        if (!User.Identity.IsAuthenticated)
         {
-            throw new NotFoundException("Такой пользователь не существует");
+            throw new NotFoundException("Такой пользователь не существует"); //TODO поменять ошибку на 402
         }
 
         var id = User.GetUserId();
@@ -19,6 +19,6 @@ public abstract class AdBoardBaseController : ControllerBase
         var role = User.GetUserRole();
         var dateOfBirth = User.GetUserDateOfBirth();
 
-        return new UserContextLight(id, email, role, dateOfBirth);
+        return new UserContextLightDto(id, email, role, dateOfBirth);
     }
 }
