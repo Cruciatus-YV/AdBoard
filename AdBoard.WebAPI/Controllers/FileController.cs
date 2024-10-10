@@ -22,4 +22,21 @@ public class FileController : AdBoardBaseController
 
         return Created();
     }
+
+    [HttpGet("download/{id}")]
+    public async Task<IActionResult> Download(long id, CancellationToken cancellationToken)
+    {
+        var result = await _fileService.DownloadAsync(id, cancellationToken);
+
+        Response.ContentLength = result.Content.Length;
+
+        return File(result.Content, result.ContentType, result.Name);
+    }
+
+    [HttpGet("{id}/info")]
+    public async Task<IActionResult> GetFileInfo(long id, CancellationToken cancellationToken)
+    {
+        var result = await _fileService.GetFileInfoAsync(id, cancellationToken);
+        return Ok(result);
+    }
 }

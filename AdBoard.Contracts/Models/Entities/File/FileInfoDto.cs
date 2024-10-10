@@ -21,6 +21,11 @@ public class FileInfoDto
     public int Length { get; set; }
 
     /// <summary>
+    /// Тип файла.
+    /// </summary>
+    public string ContentType { get; set; }
+
+    /// <summary>
     /// Дата и время создания файла.
     /// </summary>
     public DateTime CreatedAt { get; set; }

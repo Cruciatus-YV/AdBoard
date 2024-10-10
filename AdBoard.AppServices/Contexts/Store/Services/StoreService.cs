@@ -4,6 +4,7 @@ using AdBoard.Contracts.Enums;
 using AdBoard.Contracts.Models.Entities.Store.Requests;
 using AdBoard.Contracts.Models.Entities.Store.Responses;
 using AdBoard.Contracts.Models.Entities.User;
+using AdBoard.Contracts.Models.Entities.User.Responses;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.AppServices.Contexts.Store.Services;
@@ -35,7 +36,22 @@ public class StoreService : IStoreService
 
     public async Task<StoreResponse?> GetAsync(long id, CancellationToken cancellationToken)
     {
-       return await _storeRepository.GetStoreInfo(id, cancellationToken);
+        var store = await _storeRepository.GetByIdAsync(id, cancellationToken);
+
+        if (store == null) 
+        {
+            throw new NotFoundException("Магазин не найден");    
+        }
+
+        return new StoreResponse
+        {
+            Description = store.Description,
+            Id = store.Id,
+            IsDefault = store.IsDefault,
+            Name = store.Name,
+            Status = store.Status,
+            Seller = new UserLigthResponse(store.SellerId, store.Seller.FirstName, store.Seller.LastName, store.Seller.Email)
+        };
     }
 
     public async Task UpdateAsync(StoreRequestUpdate request, UserContextLightDto userContextLightDto, CancellationToken cancellationToken)

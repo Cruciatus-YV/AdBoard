@@ -6,5 +6,4 @@ namespace AdBoard.AppServices.Contexts.Store.Repositories;
 
 public interface IStoreRepository : IGenericRepository<StoreEntity, long>
 {
-    Task<StoreResponse?> GetStoreInfo(long id, CancellationToken cancellationToken);
 }
