@@ -14,7 +14,7 @@ public interface IProductService
                                             CancellationToken cancellationToken);
 
     Task<long> CreateAsync(ProductRequestCreate request,
-                           UserContextLightDto userContext,
+                           UserContextLight userContext,
                            CancellationToken cancellationToken);
 
     Task<bool> UpdateAsync(ProductRequestUpdate request,

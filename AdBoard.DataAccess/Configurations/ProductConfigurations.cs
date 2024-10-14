@@ -45,5 +45,9 @@ public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
         builder.HasOne(x => x.Category)
                .WithMany(x => x.Products)
                .HasForeignKey(x => x.CategoryId);
+
+        builder.HasMany(p => p.Images)
+               .WithOne()
+               .HasForeignKey(x => x.ProductId);
     }
 }

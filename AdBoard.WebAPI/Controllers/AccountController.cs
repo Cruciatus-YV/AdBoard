@@ -10,15 +10,17 @@ namespace AdBoard.WebAPI.Controllers
     public class AccountController : AdBoardBaseController
     {
         private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IUserService userService)
         {
             _accountService = accountService;
+            _userService = userService;
         }
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromForm] UserRegisterRequest request, CancellationToken cancellationToken)
         {
             var result = await _accountService.RegisterAsync(request, cancellationToken);
 
@@ -38,6 +40,14 @@ namespace AdBoard.WebAPI.Controllers
             {
                 return Unauthorized(new { message = ex.Message });
             }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] UserUpdateRequest request, CancellationToken cancellationToken)
+        {
+            await _userService.UpdateAsync(request, GetUserContextLigth(), cancellationToken);
+
+            return Ok();
         }
     }
 }

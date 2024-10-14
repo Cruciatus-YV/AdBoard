@@ -6,7 +6,7 @@ namespace AdBoard.AppServices.Contexts.Store.Services;
 
 public interface IStoreService
 {
-    Task<long> CreateAsync(StoreRequestCreate request, UserContextLightDto userContextLightDto, CancellationToken cancellationToken);
+    Task<long> CreateAsync(StoreRequestCreate request, UserContextLight userContextLightDto, CancellationToken cancellationToken);
     Task<StoreResponse?> GetAsync(long id, CancellationToken cancellationToken);
-    Task UpdateAsync(StoreRequestUpdate request, UserContextLightDto userContextLightDto, CancellationToken cancellationToken);
+    Task UpdateAsync(StoreRequestUpdate request, UserContextLight userContextLightDto, CancellationToken cancellationToken);
 }

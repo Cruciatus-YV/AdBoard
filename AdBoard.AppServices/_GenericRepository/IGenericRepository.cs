@@ -11,8 +11,7 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="id">Идентификатор сущности.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>Сущность либо null.</returns>
-    Task<TEntity?> GetByIdAsync(TId id,
-                                CancellationToken cancellationToken);
+    Task<TEntity?> GetByIdAsync(TId id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получает список сущностей, соответствующих заданному предикату.
@@ -20,11 +19,9 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="predicate">Предикат, определяющий условие для фильтрации сущностей.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>Список сущностей, удовлетворяющих условию предиката. Если сущностей не найдено, возвращается пустой список.</returns>
-    Task<List<TEntity>> GetListByPredicate(Expression<Func<TEntity, bool>> predicate,
-                                       CancellationToken cancellationToken);
+    Task<List<TEntity>> GetListByPredicate(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
-    Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate,
-                                                    CancellationToken cancellationToken);
+    Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
     /// <summary>
     /// Добавляет сущность.
@@ -32,8 +29,9 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="entity">Сущность, которую нужно добавить.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>Идентификатор добавленной сущности.</returns>
-    Task<TId> InsertAsync(TEntity entity,
-                          CancellationToken cancellationToken);
+    Task<TId> InsertAsync(TEntity entity, CancellationToken cancellationToken);
+
+    Task<IEnumerable<TEntity>> InsertListAsync(IReadOnlyCollection<TEntity> entities, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновляет сущность.
@@ -41,8 +39,7 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="entity">Сущность, которую нужно обновить.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>Истинное значение, если обновление прошло успешно; иначе ложное значение.</returns>
-    Task<bool> UpdateAsync(TEntity entity,
-                           CancellationToken cancellationToken);
+    Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 
     /// <summary>
     /// Удаляет сущность.
@@ -50,8 +47,9 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="id">Идентификатор сущности, которую нужно удалить.</param>
     /// <param name="cancellationToken">Токен отмены для управления отменой асинхронной операции.</param>
     /// <returns>True, если удаление прошло успешно; иначе False.</returns>
-    Task<bool> DeleteAsync(TId id,
-                           CancellationToken cancellationToken);
+    Task<bool> DeleteAsync(TId id, CancellationToken cancellationToken);
+
+    Task<bool> DeleteListAsync(IReadOnlyCollection<TId> ids, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получает список сущностей, удовлетворяющих заданному предикату, с учетом пагинации.
@@ -75,6 +73,5 @@ public interface IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId
     /// <param name="id">Идентификатор сущности, для которой нужно проверить существование.</param>
     /// <param name="cancellationToken">Токен отмены асинхронной операции.</param>
     /// <returns>Возвращает <c>true</c>, если сущность с указанным идентификатором существует; иначе <c>false</c>.</returns>
-    Task<bool> ExistsAsync(TId id,
-                           CancellationToken cancellationToken);
+    Task<bool> ExistsAsync(TId id, CancellationToken cancellationToken);
 }

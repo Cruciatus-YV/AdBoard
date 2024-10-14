@@ -53,8 +53,8 @@ public class CategoryController : AdBoardBaseController
     /// <param name="request">Модель для создания категории.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 201 Created.</returns>
-    [HttpPost("create")]
-    [Authorize(Roles = "User, SuperManager, SuperAdmin")]
+    [HttpPost]
+    //[Authorize(Roles = "User, SuperManager, SuperAdmin")]
     public async Task<IActionResult> ProposeToCreate([FromBody] CategoryRequestCreate request, CancellationToken cancellationToken)
     {
         var result = await _categoryService.CreateUnapprovedAsync(request, cancellationToken);
@@ -62,7 +62,7 @@ public class CategoryController : AdBoardBaseController
     }
 
     [HttpPatch("approve")]
-    [Authorize(Roles = "SuperAdmin")]
+    //[Authorize(Roles = "SuperAdmin")]
     public async Task<IActionResult> Approve(long id, CancellationToken cancellationToken)
     {
         await _categoryService.ApproveAsync(id, cancellationToken);
@@ -75,7 +75,7 @@ public class CategoryController : AdBoardBaseController
     /// <param name="request">Модель для обновления категории.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 200 OK если категория обновлена, иначе 404 Not Found.</returns>
-    [HttpPut("update")]
+    [HttpPut]
     public async Task<IActionResult> Update([FromBody] CategoryRequestUpdate request,
                                             CancellationToken cancellationToken)
     {
@@ -89,7 +89,7 @@ public class CategoryController : AdBoardBaseController
     /// <param name="id">Идентификатор категории.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Статус-код 200 OK если категория удалена, иначе 404 Not Found.</returns>
-    [HttpDelete("delete/{id:long}")]
+    [HttpDelete("{id:long}")]
     public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
     {
         var result = await _categoryService.DeleteAsync(id, cancellationToken);

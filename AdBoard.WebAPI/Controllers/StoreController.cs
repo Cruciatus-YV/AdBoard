@@ -21,7 +21,7 @@ namespace AdBoard.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]StoreRequestCreate request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromForm] StoreRequestCreate request, CancellationToken cancellationToken)
         {
             
             await _storeService.CreateAsync(request, GetUserContextLigth(), cancellationToken);
@@ -29,7 +29,7 @@ namespace AdBoard.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet("get/{id:long}")]
+        [HttpGet("{id:long}")]
         public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
         {
             var result = await _storeService.GetAsync(id, cancellationToken);
@@ -37,8 +37,8 @@ namespace AdBoard.WebAPI.Controllers
             return result == null ? NotFound() : Ok(result);
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(StoreRequestUpdate request, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] StoreRequestUpdate request, CancellationToken cancellationToken)
         {
             await _storeService.UpdateAsync(request, GetUserContextLigth(), cancellationToken);
 

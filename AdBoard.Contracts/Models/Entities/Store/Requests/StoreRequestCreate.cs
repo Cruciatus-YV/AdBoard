@@ -1,4 +1,5 @@
 ﻿using AdBoard.Contracts.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdBoard.Contracts.Models.Entities.Store.Requests;
@@ -17,4 +18,6 @@ public class StoreRequestCreate
     /// Описание магазина.
     /// </summary>
     public string? Description { get; set; }
+
+    public IFormFile? Avatar { get; set; }
 }

@@ -7,7 +7,7 @@ namespace AdBoard.WebAPI.Controllers;
 
 public abstract class AdBoardBaseController : ControllerBase
 {
-    protected UserContextLightDto GetUserContextLigth()
+    protected UserContextLight GetUserContextLigth()
     {
         if (!User.Identity.IsAuthenticated)
         {
@@ -19,6 +19,6 @@ public abstract class AdBoardBaseController : ControllerBase
         var role = User.GetUserRole();
         var dateOfBirth = User.GetUserDateOfBirth();
 
-        return new UserContextLightDto(id, email, role, dateOfBirth);
+        return new UserContextLight(id, email, role, dateOfBirth);
     }
 }

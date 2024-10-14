@@ -19,20 +19,16 @@ public class MigrationDbContextFactory : IDesignTimeDbContextFactory<MigrationDb
     /// <returns>Экземпляр <see cref="MigrationDbContext"/> с настроенными параметрами подключения.</returns>
     public MigrationDbContext CreateDbContext(string[] args)
     {
-        // Создание билдерa для конфигурации и добавление файла конфигурации
         var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory()) // Убедитесь, что путь к файлу правильный
+            .SetBasePath(Directory.GetCurrentDirectory()) 
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
         var configuration = builder.Build();
 
-        // Получение строки подключения из конфигурации
         var connectionString = configuration.GetConnectionString("ConnectionString");
 
-        // Настройка опций контекста базы данных для использования PostgreSQL
-        var dbContextOptionsBuilder = new DbContextOptionsBuilder<AdBoardDbContext>(); // Измените здесь на AdBoardDbContext
+        var dbContextOptionsBuilder = new DbContextOptionsBuilder<AdBoardDbContext>(); 
         dbContextOptionsBuilder.UseNpgsql(connectionString);
 
-        // Создание и возврат экземпляра контекста базы данных с заданными опциями
         return new MigrationDbContext(dbContextOptionsBuilder.Options);
     }
 }

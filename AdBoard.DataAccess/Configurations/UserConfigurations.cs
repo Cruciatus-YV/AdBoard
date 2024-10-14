@@ -20,6 +20,13 @@ public class UserConfigurations : IEntityTypeConfiguration<UserEntity>
                .HasMaxLength(255)
                .IsRequired();
 
+        builder.Property(x => x.AvatarId)
+               .IsRequired(false);
+
+        builder.HasOne(x => x.Avatar)
+               .WithOne()
+               .HasForeignKey<UserEntity>(x => x.AvatarId);
+
         builder.HasMany(x => x.Stores)
                .WithOne(x => x.Seller)
                .HasForeignKey(x => x.SellerId);

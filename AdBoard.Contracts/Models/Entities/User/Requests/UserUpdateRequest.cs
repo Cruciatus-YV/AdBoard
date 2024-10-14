@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdBoard.Contracts.Models.Entities.User.Requests;
 
-public class UserRegisterRequest
+public class UserUpdateRequest
 {
     /// <summary>
     /// Имя пользователя
     /// </summary>
     [Required]
-    public string FirstName { get; set; }
+    public required string FirstName { get; set; }
 
     /// <summary>
     /// Фамилия пользователя
     /// </summary>
     [Required]
-    public string LastName { get; set; }
+    public required string LastName { get; set; }
 
     /// <summary>
     /// Дата рождения пользователя
@@ -27,12 +27,6 @@ public class UserRegisterRequest
     /// </summary>
     [Required]
     public string Email { get; set; }
-
-    /// <summary>
-    /// Пароль пользователя
-    /// </summary>
-    [Required]
-    public string Password { get; set; }
 
     public IFormFile? Avatar { get; set; }
 }

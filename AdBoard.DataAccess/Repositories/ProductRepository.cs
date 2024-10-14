@@ -11,11 +11,17 @@ using Microsoft.EntityFrameworkCore;
 using AdBoard.Contracts.Models.Entities.Product;
 using AdBoard.Contracts.Models.Entities.Category.Responses;
 using AdBoard.Contracts.Models.Entities.User.Responses;
+using System.Linq.Dynamic.Core;
 
 namespace AdBoard.Infrastructure.Repositories;
 
 public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
+    public async Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken)
+    {
+        return await _asNoTracking.Include(x => x.Images).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task<bool> DeleteProductAsync(long id, CancellationToken cancellationToken)
     {
         var target = await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Status != ProductStatus.Unavailable, cancellationToken);

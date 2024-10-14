@@ -27,6 +27,13 @@ public class StoreConfigurations : IEntityTypeConfiguration<StoreEntity>
         builder.Property(x => x.Description)
                .IsRequired(false);
 
+        builder.Property(x => x.AvatarId)
+               .IsRequired(false);
+
+        builder.HasOne(x => x.Avatar)
+               .WithOne()
+               .HasForeignKey<StoreEntity>(x => x.AvatarId);
+
         builder.HasOne(x => x.Seller)
                .WithMany()
                .HasForeignKey(x => x.SellerId);

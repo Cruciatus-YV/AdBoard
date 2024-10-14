@@ -6,11 +6,6 @@
 public class FileEntity : CreatableEntity<long>
 {
     /// <summary>
-    /// Идентификатор файла.
-    /// </summary>
-    public long Id { get; set; }
-
-    /// <summary>
     /// Имя файла.
     /// </summary>
     public string Name { get; set; }

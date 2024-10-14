@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AdBoard.Contracts.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace AdBoard.Contracts.Models.Entities.Product.Requests;
 
@@ -49,4 +50,6 @@ public class ProductRequestCreate
     /// Единица измерения количества товара.
     /// </summary>
     public MeasurementUnit MeasurementUnit { get; set; }
+
+    public IFormFileCollection? Images { get; set; }
 }

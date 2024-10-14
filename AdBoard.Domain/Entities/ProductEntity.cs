@@ -55,6 +55,9 @@ public class ProductEntity : MutableEntity<long>, IHaveCategoryId,
     /// </summary>
     public ProductStatus Status { get; set; }
 
+
+    public virtual List<ProductImageEntity> Images { get; set; } = [];  
+
     /// <summary>
     /// Категория товара.
     /// </summary>
@@ -65,5 +68,5 @@ public class ProductEntity : MutableEntity<long>, IHaveCategoryId,
     /// </summary>
     public virtual StoreEntity Store { get; set; }
 
-    public virtual List<FeedbackEntity> Feedback {  get; set; }
+    public virtual List<FeedbackEntity> Feedback { get; set; } = [];
 }

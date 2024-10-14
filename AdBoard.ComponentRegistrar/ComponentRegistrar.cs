@@ -1,4 +1,5 @@
-﻿using AdBoard.AppServices.Contexts.Category.Repositories;
+﻿using AdBoard.AppServices.Cache;
+using AdBoard.AppServices.Contexts.Category.Repositories;
 using AdBoard.AppServices.Contexts.Category.Services;
 using AdBoard.AppServices.Contexts.FavoriteProduct.Repositories;
 using AdBoard.AppServices.Contexts.FavoriteProduct.Services;
@@ -13,6 +14,7 @@ using AdBoard.AppServices.Contexts.OrderItem.Services;
 using AdBoard.AppServices.Contexts.Product.Repositories;
 using AdBoard.AppServices.Contexts.Product.Services;
 using AdBoard.AppServices.Contexts.Product.SpecificationBuilder;
+using AdBoard.AppServices.Contexts.ProductImage.Repositories;
 using AdBoard.AppServices.Contexts.Store.Repositories;
 using AdBoard.AppServices.Contexts.Store.Services;
 using AdBoard.AppServices.Contexts.User.Services;
@@ -47,6 +49,8 @@ public static class ComponentRegistrar
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IProductSpecificationBuilder, ProductSpecificationBuilder>();
+        services.AddScoped<IProductImageRepository, ProductImageRepository>();
+
 
         services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped<IStoreService, StoreService>();
@@ -58,7 +62,7 @@ public static class ComponentRegistrar
         services.AddScoped<IFileRepository, FileRepository>();
         services.AddScoped<IFileService, FileService>();
 
-
+        services.AddScoped<ICacheService, CacheService>();
 
 
         services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));

@@ -1,4 +1,5 @@
 ﻿using AdBoard.Contracts.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace AdBoard.Contracts.Models.Entities.Product.Requests;
 
@@ -45,4 +46,6 @@ public class ProductRequestUpdate
     /// Статус товара.
     /// </summary>
     public ProductStatus Status { get; set; }
+
+    public IFormFileCollection Images { get; set; }
 }

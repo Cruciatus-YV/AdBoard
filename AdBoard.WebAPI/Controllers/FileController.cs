@@ -1,6 +1,7 @@
 ﻿using AdBoard.AppServices.Contexts.File.Services;
 using AdBoard.Contracts.Models.Entities.File;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace AdBoard.WebAPI.Controllers;
 
@@ -15,15 +16,15 @@ public class FileController : AdBoardBaseController
         _fileService = fileService;
     }
 
-    [HttpPost("upload")]
+    [HttpPost]
     public async Task<IActionResult> Upload(IFormFile file, CancellationToken cancellationToken)
     {
-        await _fileService.UploadAsync(file, cancellationToken);
+        var result = await _fileService.UploadAsync(file, cancellationToken);
 
-        return Created();
+        return StatusCode((int)HttpStatusCode.Created, result);
     }
 
-    [HttpGet("download/{id}")]
+    [HttpGet("{id:long}")]
     public async Task<IActionResult> Download(long id, CancellationToken cancellationToken)
     {
         var result = await _fileService.DownloadAsync(id, cancellationToken);

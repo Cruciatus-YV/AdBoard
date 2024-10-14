@@ -1,4 +1,5 @@
 ﻿using AdBoard.Contracts.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace AdBoard.Contracts.Models.Entities.Store.Requests;
 
@@ -23,4 +24,6 @@ public class StoreRequestUpdate
     /// Статус магазина.
     /// </summary>
     public required StoreStatus Status { get; set; }
+
+    public IFormFile? Avatar { get; set; }
 }

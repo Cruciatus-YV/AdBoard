@@ -28,7 +28,7 @@ namespace AdBoard.Services
 
         public async Task<string> RegisterAsync(UserRegisterRequest request, CancellationToken cancellationToken)
         {
-            var user = await _userService.CreateUserAsync(request);
+            var user = await _userService.CreateUserAsync(request, cancellationToken);
 
             var entity = new StoreEntity
             {

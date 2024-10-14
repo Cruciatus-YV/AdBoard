@@ -59,6 +59,12 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>()
     .AddEntityFrameworkStores<AdBoardDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.InstanceName = "my_cache_";
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -34,15 +34,15 @@ public class ProductController : AdBoardBaseController
     }
 
 
-    [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] ProductRequestCreate request, CancellationToken cancellationToken)
+    [HttpPost]
+    public async Task<IActionResult> Create([FromForm] ProductRequestCreate request, CancellationToken cancellationToken)
     {
         await _productService.CreateAsync(request, GetUserContextLigth(), cancellationToken);
         return Created();
     }
 
-    [HttpPut("update")]
-    public async Task<IActionResult> Update([FromBody] ProductRequestUpdate request, CancellationToken cancellationToken)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromForm] ProductRequestUpdate request, CancellationToken cancellationToken)
     {
         await _productService.UpdateAsync(request, cancellationToken);
         return Ok();
@@ -72,7 +72,7 @@ public class ProductController : AdBoardBaseController
     }
 
 
-    [HttpDelete("delete/{id:long}")]
+    [HttpDelete("{id:long}")]
     public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
     {
         await _productService.DeleteAsync(id, cancellationToken);

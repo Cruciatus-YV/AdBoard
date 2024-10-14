@@ -13,6 +13,8 @@ namespace AdBoard.AppServices.Contexts.Product.Repositories;
 /// </summary>
 public interface IProductRepository : IGenericRepository<ProductEntity, long>
 {
+    Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken);
+
     /// <summary>
     /// Удаляет товар по его идентификатору.
     /// </summary>

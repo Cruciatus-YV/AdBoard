@@ -11,6 +11,9 @@ public class FileConfiguration : IEntityTypeConfiguration<FileEntity>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+               .ValueGeneratedOnAdd();
+
         builder.Property(x => x.Name)
                .HasMaxLength(255)
                .IsRequired();

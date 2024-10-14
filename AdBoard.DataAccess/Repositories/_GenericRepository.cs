@@ -43,6 +43,13 @@ public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> 
         return entity.Id;
     }
 
+    public async Task<IEnumerable<TEntity>> InsertListAsync(IReadOnlyCollection<TEntity> entities, CancellationToken cancellationToken)
+    {
+        await _dbContext.AddRangeAsync(entities, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return entities;
+    }
+
     public async Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbContext.Update(entity);
@@ -56,6 +63,21 @@ public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> 
         if (entity != null)
         {
             _dbContext.Remove(entity);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public async Task<bool> DeleteListAsync(IReadOnlyCollection<TId> ids, CancellationToken cancellationToken)
+    {
+        var entities = await GetListByPredicate(x => ids.Contains(x.Id), cancellationToken);
+
+        if (entities?.Any() == true)
+        {
+            _dbContext.RemoveRange(entities);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
