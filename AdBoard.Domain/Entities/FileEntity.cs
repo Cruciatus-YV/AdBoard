@@ -1,4 +1,5 @@
 ﻿using AdBoard.Domain.Base;
+using AdBoard.Domain.Entities;
 
 /// <summary>
 /// Сущностьфайла.

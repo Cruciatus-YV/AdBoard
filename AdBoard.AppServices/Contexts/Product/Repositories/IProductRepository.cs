@@ -16,7 +16,7 @@ public interface IProductRepository : IGenericRepository<ProductEntity, long>
     Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Удаляет товар по его идентификатору.
+    /// Удаляет товар по его идентификатору (Флаг IsDeleted = true).
     /// </summary>
     /// <param name="id">Идентификатор товара, который нужно удалить.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>

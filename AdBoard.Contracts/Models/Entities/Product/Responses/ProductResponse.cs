@@ -46,4 +46,6 @@ public class ProductResponse
     public ProductStatus Status { get; set; }
 
     public StoreResponse Store { get; set; }
+
+    public List<long> Images { get; set; }
 }

@@ -6,4 +6,5 @@ namespace AdBoard.AppServices.Contexts.Store.Repositories;
 
 public interface IStoreRepository : IGenericRepository<StoreEntity, long>
 {
+    Task<StoreResponse?> GetByIdWithSellerAsync(long id, CancellationToken cancellationToken);
 }

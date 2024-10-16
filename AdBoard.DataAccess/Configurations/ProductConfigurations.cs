@@ -1,6 +1,7 @@
 ﻿using AdBoard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace AdBoard.Infrastructure.Configurations;
 
@@ -46,8 +47,8 @@ public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
                .WithMany(x => x.Products)
                .HasForeignKey(x => x.CategoryId);
 
-        builder.HasMany(p => p.Images)
-               .WithOne()
-               .HasForeignKey(x => x.ProductId);
+        builder.HasMany(p => p.Images)               // Один продукт имеет много изображений
+               .WithOne()                             // Убираем навигационное свойство, которое связывает FileEntity с ProductEntity
+               .OnDelete(DeleteBehavior.Cascade);    // При удалении продукта удаляем и связанные изображения, если они есть
     }
 }

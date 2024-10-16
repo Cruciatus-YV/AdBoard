@@ -238,26 +238,26 @@ namespace AdBoard.DbMigrator.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+            //modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
+            //    {
+            //        b.Property<long>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+            //        NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("FileId")
-                        .HasColumnType("bigint");
+            //        b.Property<long>("FileId")
+            //            .HasColumnType("bigint");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
+            //        b.Property<long>("ProductId")
+            //            .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+            //        b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
-                });
+            //        b.ToTable("ProductImages", (string)null);
+            //    });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
                 {
@@ -646,14 +646,14 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
-                {
-                    b.HasOne("AdBoard.Domain.Entities.ProductEntity", null)
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            //modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
+            //    {
+            //        b.HasOne("AdBoard.Domain.Entities.ProductEntity", null)
+            //            .WithMany("Images")
+            //            .HasForeignKey("ProductId")
+            //            .OnDelete(DeleteBehavior.Cascade)
+            //            .IsRequired();
+            //    });
 
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
                 {

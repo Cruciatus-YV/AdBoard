@@ -1,8 +1,6 @@
 ﻿using AdBoard.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Не забудь подключить этот namespace
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace AdBoard.Infrastructure;

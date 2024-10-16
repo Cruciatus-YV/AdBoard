@@ -6,8 +6,10 @@ using System.Text.Json;
 
 namespace AdBoard.AppServices.Cache;
 
-public class CacheService(IDistributedCache distributedCache,
-                          ICategoryRepository categoryRepository) : ICacheService
+/// <summary>
+/// Сервис для работы с кэшем
+/// </summary>
+public class CacheService(IDistributedCache distributedCache, ICategoryRepository categoryRepository) : ICacheService
 {
     private readonly IDistributedCache _distributedCache = distributedCache;
     private readonly ICategoryRepository _categoryRepository = categoryRepository;
@@ -77,6 +79,7 @@ public class CacheService(IDistributedCache distributedCache,
 
     private async Task UpdateCategoriesAsync(List<CategoryEntity> categories, CancellationToken cancellationToken)
     {
+        categories = categories.DistinctBy(x => x.Id).ToList();
         var serializedCategories = JsonSerializer.Serialize(categories);
         await _distributedCache.SetStringAsync(ALL_CATEGORIES_KEY, serializedCategories, cancellationToken);
 

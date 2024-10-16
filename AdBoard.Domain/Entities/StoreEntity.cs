@@ -36,8 +36,14 @@ public class StoreEntity : MutableEntity<long>
     /// </summary>
     public bool IsDefault { get; set; }
 
+    /// <summary>
+    /// Идентификатор аватара.
+    /// </summary>
     public long? AvatarId {  get; set; }
 
+    /// <summary>
+    /// Аватар.
+    /// </summary>
     public virtual FileEntity? Avatar { get; set; }
 
     /// <summary>

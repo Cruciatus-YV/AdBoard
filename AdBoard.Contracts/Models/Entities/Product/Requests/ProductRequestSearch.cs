@@ -1,7 +1,12 @@
 ﻿using AdBoard.Contracts.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdBoard.Contracts.Models.Entities.Product.Requests;
 
+/// <summary>
+/// DTO для представления параметров поиска товаров.
+/// Используется для фильтрации и сортировки списка товаров.
+/// </summary>
 public class ProductRequestSearch
 {
     /// <summary>
@@ -57,16 +62,21 @@ public class ProductRequestSearch
     /// <summary>
     /// Номер страницы для пагинации результатов.
     /// </summary>
+    [Required(ErrorMessage = "Номер страницы обязателен.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Номер страницы должен быть больше 0.")]
     public int PageNumber { get; set; }
 
     /// <summary>
     /// Размер страницы — количество элементов на одной странице.
     /// </summary>
+    [Required(ErrorMessage = "Размер страницы обязателен.")]
+    [Range(1, 100, ErrorMessage = "Размер страницы должен быть от 1 до 100.")]
     public int PageSize { get; set; }
 
     /// <summary>
     /// Поле, по которому осуществляется сортировка результатов.
     /// </summary>
+    [Required(ErrorMessage = "Поле, по которому нужно осуществить сортировку, обязательно.")]
     public string SortBy { get; set; }
 
     /// <summary>

@@ -5,11 +5,13 @@ using AdBoard.Contracts.Enums;
 using AdBoard.Contracts.Models.Entities.Store.Requests;
 using AdBoard.Contracts.Models.Entities.Store.Responses;
 using AdBoard.Contracts.Models.Entities.User;
-using AdBoard.Contracts.Models.Entities.User.Responses;
 using AdBoard.Domain.Entities;
 
 namespace AdBoard.AppServices.Contexts.Store.Services;
 
+/// <summary>
+/// Сервис для работы с магазинами.
+/// </summary>
 public class StoreService : IStoreService
 {
     private readonly IStoreRepository _storeRepository;
@@ -31,8 +33,8 @@ public class StoreService : IStoreService
             avatar = await _fileService.UploadAsync(request.Avatar, cancellationToken);
         }
 
-        var entity = new StoreEntity 
-        { 
+        var entity = new StoreEntity
+        {
             Name = request.Name,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
@@ -48,27 +50,19 @@ public class StoreService : IStoreService
 
     public async Task<StoreResponse?> GetAsync(long id, CancellationToken cancellationToken)
     {
-        var store = await _storeRepository.GetByIdAsync(id, cancellationToken);
+        var store = await _storeRepository.GetByIdWithSellerAsync(id, cancellationToken);
 
-        if (store == null) 
+        if (store == null)
         {
-            throw new NotFoundException("Магазин не найден");    
+            throw new NotFoundException("Магазин не найден");
         }
 
-        return new StoreResponse
-        {
-            Description = store.Description,
-            Id = store.Id,
-            IsDefault = store.IsDefault,
-            Name = store.Name,
-            Status = store.Status,
-            Seller = new UserLigthResponse(store.SellerId, store.Seller.FirstName, store.Seller.LastName, store.Seller.Email)
-        };
+        return store;
     }
 
-    public async Task UpdateAsync(StoreRequestUpdate request, UserContextLight userContextLightDto, CancellationToken cancellationToken)
+    public async Task UpdateAsync(StoreRequestUpdate request, UserContextLight userContext, CancellationToken cancellationToken)
     {
-        var store = await _storeRepository.GetByPredicate(x => x.Id == request.Id && x.SellerId == userContextLightDto.Id, cancellationToken);
+        var store = await _storeRepository.GetByPredicate(x => x.Id == request.Id && (x.SellerId == userContext.Id || (userContext.IsSuperAdmin || userContext.IsSuperManager)), cancellationToken);
 
         if (store == null)
         {
@@ -79,7 +73,7 @@ public class StoreService : IStoreService
 
         if (request.Avatar != null)
         {
-            if(store.AvatarId.HasValue)
+            if (store.AvatarId.HasValue)
             {
                 await _fileService.DeleteAsync(store.AvatarId.Value, cancellationToken);
             }

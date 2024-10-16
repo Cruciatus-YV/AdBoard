@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdBoard.Infrastructure.Repositories;
 
+/// <summary>
+/// Репозиторий, работающий с категориями.
+/// </summary>
 public class CategoryRepository(AdBoardDbContext dbContext) : GenericRepository<CategoryEntity, long>(dbContext), ICategoryRepository
 {
     public async Task<List<CategoryEntity>> GetAllActiveAsync(CancellationToken cancellationToken)
@@ -40,7 +43,7 @@ public class CategoryRepository(AdBoardDbContext dbContext) : GenericRepository<
 
     public async Task<CategoryEntity> ApproveCategoryAsync(long id, CancellationToken cancellationToken)
     {
-        var target = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+        var target = await _dbSet.FirstOrDefaultAsync(x => x.Id == id && x.Approved != true, cancellationToken);
 
         if (target == null)
         {

@@ -18,5 +18,5 @@ public enum OrderStatus
     /// <summary>
     /// Заказ опубликован.
     /// </summary>
-    Published = 2
+    Payed = 2
 }

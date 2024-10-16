@@ -15,4 +15,5 @@ public class ProductPageItemDto
     public int RatingSum { get; set; }
     public int FeedbackCount { get; set; }
     public string StoreName { get; set; }
+    public List<long> Images { get; set; }
 }

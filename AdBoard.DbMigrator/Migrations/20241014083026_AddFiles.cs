@@ -23,25 +23,25 @@ namespace AdBoard.DbMigrator.Migrations
                 type: "bigint",
                 nullable: true);
 
-            migrationBuilder.CreateTable(
-                name: "ProductImages",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FileId = table.Column<long>(type: "bigint", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductImages_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "ProductImages",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<long>(type: "bigint", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        FileId = table.Column<long>(type: "bigint", nullable: false),
+            //        ProductId = table.Column<long>(type: "bigint", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_ProductImages", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_ProductImages_Products_ProductId",
+            //            column: x => x.ProductId,
+            //            principalTable: "Products",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_AvatarId",
@@ -55,10 +55,10 @@ namespace AdBoard.DbMigrator.Migrations
                 column: "AvatarId",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductImages_ProductId",
-                table: "ProductImages",
-                column: "ProductId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_ProductImages_ProductId",
+            //    table: "ProductImages",
+            //    column: "ProductId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Stores_Files_AvatarId",
@@ -86,8 +86,8 @@ namespace AdBoard.DbMigrator.Migrations
                 name: "FK_Users_Files_AvatarId",
                 table: "Users");
 
-            migrationBuilder.DropTable(
-                name: "ProductImages");
+            //migrationBuilder.DropTable(
+            //    name: "ProductImages");
 
             migrationBuilder.DropIndex(
                 name: "IX_Users_AvatarId",

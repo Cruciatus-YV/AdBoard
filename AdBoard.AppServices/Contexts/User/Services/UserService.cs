@@ -2,12 +2,15 @@
 using AdBoard.AppServices.Exceptions;
 using AdBoard.Contracts.Models.Entities.User;
 using AdBoard.Contracts.Models.Entities.User.Requests;
+using AdBoard.Contracts.Models.Entities.User.Responses;
 using AdBoard.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace AdBoard.AppServices.Contexts.User.Services;
 
+/// <summary>
+/// Сервис для работы с пользователями (Создание, получение, обновление).
+/// </summary>
 public class UserService : IUserService
 {
     private readonly UserManager<UserEntity> _userManager;
@@ -33,7 +36,7 @@ public class UserService : IUserService
         {
             avatar = await _fileService.UploadAsync(request.Avatar, cancellationToken);
         }
-
+       
         var user = new UserEntity
         {
             FirstName = request.FirstName,
@@ -51,7 +54,7 @@ public class UserService : IUserService
         {
             throw new UnableCreateException(string.Join(", ", result.Errors.Select(error => error.Description)), "Не удалось создать пользователя");
         }
-        
+        await _userManager.AddToRoleAsync(user, "User");
         return user;
     }
 
@@ -60,9 +63,16 @@ public class UserService : IUserService
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<UserEntity?> GetUserByIdAsync(string userId)
+    public async Task<UserLigthResponse?> GetUserByIdAsync(string userId)
     {
-        return await _userManager.FindByIdAsync(userId);
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new NotFoundException("Пользователь не найден");
+        }
+
+        return new UserLigthResponse(userId, user.FirstName, user.LastName, user.Email, user.AvatarId);
     }
 
     public async Task<bool> UpdateAsync(UserUpdateRequest request, UserContextLight userContext, CancellationToken cancellationToken)
@@ -72,10 +82,10 @@ public class UserService : IUserService
         {
             throw new NotFoundException("Пользователь не найден");
         }
-        else 
+        else if(existingUser.Email != request.Email)
         {
             var userByEmail = await _userManager.FindByEmailAsync(request.Email);
-            if(userByEmail != null && userByEmail.Id != existingUser.Id)
+            if (userByEmail != null && userByEmail.Id != existingUser.Id)
             {
                 throw new EmailAlredyRegisteredException("Пользователь с такой почтой уже зарегистрирован");
             }

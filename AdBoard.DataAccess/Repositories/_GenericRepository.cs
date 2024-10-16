@@ -6,6 +6,9 @@ using System.Linq.Expressions;
 
 namespace AdBoard.Infrastructure.Repositories;
 
+/// <summary>
+/// Универсальный репозиторий.
+/// </summary>
 public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : BaseEntity<TId>
 {
     private protected readonly AdBoardDbContext _dbContext;
@@ -40,6 +43,7 @@ public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> 
     {
         await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
         return entity.Id;
     }
 
@@ -47,12 +51,21 @@ public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> 
     {
         await _dbContext.AddRangeAsync(entities, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
+
         return entities;
     }
 
     public async Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbContext.Update(entity);
+
+        return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+    }
+
+    public async Task<bool> UpdateListAsync(IReadOnlyCollection<TEntity> entities, CancellationToken cancellationToken)
+    {
+        _dbContext.UpdateRange(entities);
+
         return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
     }
 

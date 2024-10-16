@@ -10,11 +10,14 @@ public class UserLigthResponse
 
     public string Email { get; set; }
 
-    public UserLigthResponse(string id, string firstName, string lastName, string email)
+    public long? AvatarId { get; set; }
+
+    public UserLigthResponse(string id, string firstName, string lastName, string email, long? avatarId)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        AvatarId = avatarId;
     }
 }

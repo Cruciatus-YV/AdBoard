@@ -31,13 +31,13 @@ public class ProductRequestCreate
     /// <summary>
     /// Описание товара.
     /// </summary>
-    [StringLength(500, ErrorMessage = "Описание товара не может превышать 500 символов.")]
+    [StringLength(1000, ErrorMessage = "Описание товара не может превышать 1000 символов.")]
     public string? Description { get; set; }
 
     /// <summary>
     /// Цена товара.
     /// </summary>
-    [Range(0.01, double.MaxValue, ErrorMessage = "Цена товара должна быть положительным числом.")]
+    [Range(0, double.MaxValue, ErrorMessage = "Цена товара не должна быть отрицательным числом.")]
     public decimal Price { get; set; }
 
     /// <summary>

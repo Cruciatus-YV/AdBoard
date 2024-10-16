@@ -26,6 +26,9 @@ public class UserEntity : IdentityUser
     /// </summary>
     public long? AvatarId { get; set; }
 
+    /// <summary>
+    /// Аватар.
+    /// </summary>
     public virtual FileEntity? Avatar { get; set; }
 
     /// <summary>

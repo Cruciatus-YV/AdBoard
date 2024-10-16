@@ -2,9 +2,13 @@
 using AdBoard.AppServices.Exceptions;
 using AdBoard.Contracts.Models.Entities.File;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace AdBoard.AppServices.Contexts.File.Services;
 
+/// <summary>
+/// Сервис для работы с файлами.
+/// </summary>
 public class FileService : IFileService
 {
     private readonly IFileRepository _fileRepository;
@@ -33,12 +37,12 @@ public class FileService : IFileService
 
         return result;
     }
-
-    public async Task<IEnumerable<FileEntity>> UploadListAsync(IFormFileCollection files, CancellationToken cancellationToken)
+    public static async Task<List<FileEntity>> CalculateFiles(IFormFileCollection files, CancellationToken cancellationToken)
     {
-        var entities = new List<FileEntity>();
-        foreach (var file in files) 
-        { 
+        var fileEntities = new List<FileEntity>();
+
+        foreach (var file in files)
+        {
             using var ms = new MemoryStream();
             await file.CopyToAsync(ms, cancellationToken);
             var content = ms.ToArray();
@@ -48,13 +52,19 @@ public class FileService : IFileService
                 CreatedAt = DateTime.UtcNow,
                 Content = content,
                 ContentType = file.ContentType,
-                Name = file.Name,
+                Name = file.FileName, 
                 Length = content.Length,
             };
 
-            entities.Add(entity);   
+            fileEntities.Add(entity);
         }
 
+        return fileEntities;
+    }
+
+    public async Task<IEnumerable<FileEntity>> UploadListAsync(IFormFileCollection files, CancellationToken cancellationToken)
+    {
+        var entities = await CalculateFiles(files, cancellationToken);
         var result = await _fileRepository.InsertListAsync(entities, cancellationToken);
 
         return result; 

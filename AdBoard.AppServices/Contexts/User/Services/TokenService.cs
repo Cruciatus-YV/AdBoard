@@ -8,7 +8,9 @@ using System.Text;
 
 namespace AdBoard.AppServices.Contexts.User.Services;
 
-
+/// <summary>
+/// Сервис для работы с JWT-токеном.
+/// </summary>
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;

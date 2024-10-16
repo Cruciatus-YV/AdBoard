@@ -1,5 +1,4 @@
-﻿using AdBoard.AppServices.Cache;
-using AdBoard.AppServices.Contexts.Category.Repositories;
+﻿using AdBoard.AppServices.Contexts.Category.Repositories;
 using AdBoard.Contracts.Models.Entities.Category.Requests;
 using AdBoard.Contracts.Models.Entities.Category.Responses;
 using AdBoard.Domain.Entities;
@@ -8,7 +7,6 @@ namespace AdBoard.AppServices.Contexts.Category.Services;
 
 /// <summary>
 /// Сервис для работы с категориями.
-/// Предоставляет методы для получения дерева категорий, хлебных крошек, а также для создания, обновления и удаления категорий.
 /// </summary>
 public class CategoryService : ICategoryService
 {

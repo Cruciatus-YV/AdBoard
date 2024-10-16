@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +19,5 @@
     <ProjectReference Include="..\AdBoard.DataAccess\AdBoard.DataAccess.csproj" />
     <ProjectReference Include="..\AdBoard.Infrastructure\AdBoard.Infrastructure.csproj" />
   </ItemGroup>
-
+	
 </Project>

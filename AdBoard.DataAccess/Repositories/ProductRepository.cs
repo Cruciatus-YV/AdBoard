@@ -12,9 +12,14 @@ using AdBoard.Contracts.Models.Entities.Product;
 using AdBoard.Contracts.Models.Entities.Category.Responses;
 using AdBoard.Contracts.Models.Entities.User.Responses;
 using System.Linq.Dynamic.Core;
+using AdBoard.Infrastructure;
+using AdBoard.Infrastructure.Repositories;
 
-namespace AdBoard.Infrastructure.Repositories;
+namespace AdBoard.DataAccess.Repositories;
 
+/// <summary>
+/// Репозиторий, работающий с товарами.
+/// </summary>
 public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
     public async Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken)
@@ -32,6 +37,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
         }
 
         target.Status = ProductStatus.Unavailable;
+        target.UpdatedAt = DateTime.UtcNow;
 
         return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
     }
@@ -64,6 +70,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
             {
                 targetProduct.Count += buyableProduct.Count;
             }
+            targetProduct.UpdatedAt = DateTime.UtcNow;
         }
 
         if (conflictedProducts.Count > 0)
@@ -105,6 +112,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
             RatingSum = x.Feedback.Sum(x => x.Rating),
             FeedbackCount = x.Feedback.Count,
             StoreName = x.Store.Name,
+            Images = x.Images.Select(p => p.Id).ToList(),
 
         }).PaginationListAsync(pageNumber, pageSize, cancellationToken);
 
@@ -122,6 +130,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
                                             Price = x.Price,
                                             MeasurementUnit = x.MeasurementUnit,
                                             Status = x.Status,
+                                            Images = x.Images.Select(p => p.Id).ToList(),
                                             Store = new StoreResponse
                                             {
                                                 Id = x.Store.Id,
@@ -129,7 +138,7 @@ public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<P
                                                 Description = x.Store.Description,
                                                 IsDefault = x.Store.IsDefault,
                                                 Status = x.Store.Status,
-                                                Seller = new UserLigthResponse(x.Store.Seller.Id, x.Store.Seller.FirstName, x.Store.Seller.LastName, x.Store.Seller.Email)
+                                                Seller = new UserLigthResponse(x.Store.Seller.Id, x.Store.Seller.FirstName, x.Store.Seller.LastName, x.Store.Seller.Email, x.Store.Seller.AvatarId)
                                             }
                                         }).FirstOrDefaultAsync(cancellationToken);
 

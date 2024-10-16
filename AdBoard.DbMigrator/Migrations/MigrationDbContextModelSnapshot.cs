@@ -235,27 +235,6 @@ namespace AdBoard.DbMigrator.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("FileId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages", (string)null);
-                });
-
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -411,7 +390,12 @@ namespace AdBoard.DbMigrator.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<long?>("ProductEntityId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductEntityId");
 
                     b.ToTable("Files", (string)null);
                 });
@@ -643,15 +627,6 @@ namespace AdBoard.DbMigrator.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("AdBoard.Domain.Entities.ProductImageEntity", b =>
-                {
-                    b.HasOne("AdBoard.Domain.Entities.ProductEntity", null)
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AdBoard.Domain.Entities.StoreEntity", b =>
                 {
                     b.HasOne("FileEntity", "Avatar")
@@ -676,6 +651,14 @@ namespace AdBoard.DbMigrator.Migrations
                         .HasForeignKey("AdBoard.Domain.Entities.UserEntity", "AvatarId");
 
                     b.Navigation("Avatar");
+                });
+
+            modelBuilder.Entity("FileEntity", b =>
+                {
+                    b.HasOne("AdBoard.Domain.Entities.ProductEntity", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

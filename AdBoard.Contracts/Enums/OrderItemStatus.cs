@@ -26,4 +26,9 @@ public enum OrderItemStatus
     /// Товар убран из ассортимента.
     /// </summary>
     Removed = 3,
+
+    /// <summary>
+    /// Заказ оплачен
+    /// </summary>
+    Payed = 4,
 }

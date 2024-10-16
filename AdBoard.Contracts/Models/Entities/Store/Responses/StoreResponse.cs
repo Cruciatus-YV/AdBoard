@@ -24,6 +24,8 @@ public class StoreResponse
     /// </summary>
     public string? Description { get; set; }
 
+    public long? AvatarId { get; set; }
+
     /// <summary>
     /// Статус магазина.
     /// </summary>

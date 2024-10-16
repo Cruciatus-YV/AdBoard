@@ -14,7 +14,6 @@ using AdBoard.AppServices.Contexts.OrderItem.Services;
 using AdBoard.AppServices.Contexts.Product.Repositories;
 using AdBoard.AppServices.Contexts.Product.Services;
 using AdBoard.AppServices.Contexts.Product.SpecificationBuilder;
-using AdBoard.AppServices.Contexts.ProductImage.Repositories;
 using AdBoard.AppServices.Contexts.Store.Repositories;
 using AdBoard.AppServices.Contexts.Store.Services;
 using AdBoard.AppServices.Contexts.User.Services;
@@ -49,7 +48,6 @@ public static class ComponentRegistrar
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IProductSpecificationBuilder, ProductSpecificationBuilder>();
-        services.AddScoped<IProductImageRepository, ProductImageRepository>();
 
 
         services.AddScoped<IStoreRepository, StoreRepository>();

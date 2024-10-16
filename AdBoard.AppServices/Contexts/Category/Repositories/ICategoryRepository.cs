@@ -17,12 +17,18 @@ public interface ICategoryRepository : IGenericRepository<CategoryEntity, long>
     Task<List<CategoryEntity>> GetAllActiveAsync(CancellationToken cancellationToken);
 
     /// <summary>
-    /// Удаляет категорию по её идентификатору.
+    /// Удаляет категорию по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор категории, которую нужно удалить.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>True, если категория была успешно удалена; в противном случае False.</returns>
     Task<bool> DeleteCategoryAsync(long id, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Одобряет создание категории по идентификатору.
+    /// </summary>
+    /// <param name="id">Идентификатор категории, которую нужно одобрить.</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Экземпляр одобренной категории.</returns>
     Task<CategoryEntity> ApproveCategoryAsync(long id, CancellationToken cancellationToken);
 }

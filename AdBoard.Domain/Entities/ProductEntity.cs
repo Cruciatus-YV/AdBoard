@@ -56,7 +56,7 @@ public class ProductEntity : MutableEntity<long>, IHaveCategoryId,
     public ProductStatus Status { get; set; }
 
 
-    public virtual List<ProductImageEntity> Images { get; set; } = [];  
+    public virtual List<FileEntity> Images { get; set; } = [];  
 
     /// <summary>
     /// Категория товара.

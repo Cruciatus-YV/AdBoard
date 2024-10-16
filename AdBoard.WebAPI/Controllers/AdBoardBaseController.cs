@@ -11,7 +11,7 @@ public abstract class AdBoardBaseController : ControllerBase
     {
         if (!User.Identity.IsAuthenticated)
         {
-            throw new NotFoundException("Такой пользователь не существует"); //TODO поменять ошибку на 402
+            throw new NotFoundException("Такой пользователь не существует"); //TODO поменять ошибку на 402 (Пользак не аутентифицирован)
         }
 
         var id = User.GetUserId();

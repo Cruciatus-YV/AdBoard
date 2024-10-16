@@ -2,20 +2,20 @@
 using AdBoard.AppServices.Contexts.User.Services;
 using AdBoard.AppServices.Exceptions;
 using AdBoard.Contracts.Enums;
-using AdBoard.Contracts.Models.Entities.User;
 using AdBoard.Contracts.Models.Entities.User.Requests;
 using AdBoard.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Authentication;
-using System.Threading;
 
 namespace AdBoard.Services
 {
+    /// <summary>
+    /// Сервис для работы с аккаунтами (Регистрация, логин).
+    /// </summary>
     public class AccountService : IAccountService
     {
-        private readonly IUserService _userService; 
-        private readonly ITokenService _tokenService; 
-        private readonly UserManager<UserEntity> _userManager; 
+        private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly IStoreRepository _storeRepository;
 
         public AccountService(IUserService userService, ITokenService tokenService, UserManager<UserEntity> userManager, IStoreRepository storeRepository)
@@ -43,15 +43,15 @@ namespace AdBoard.Services
             await _storeRepository.InsertAsync(entity, cancellationToken);
 
             var token = await _tokenService.GenerateJwtToken(user!);
-            return token; 
+            return token;
         }
 
         public async Task<string> LoginAsync(UserLoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
-            if (user == null) 
-            { 
+            if (user == null)
+            {
                 throw new InvalidCredsException("Неверная почта или пароль.");
             }
 
