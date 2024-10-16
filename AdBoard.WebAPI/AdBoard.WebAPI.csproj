@@ -4,10 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdBoard.AppServices\AdBoard.AppServices.csproj" />
+    <ProjectReference Include="..\AdBoard.ComponentRegistrar\AdBoard.ComponentRegistrar.csproj" />
+    <ProjectReference Include="..\AdBoard.DataAccess\AdBoard.DataAccess.csproj" />
+    <ProjectReference Include="..\AdBoard.Infrastructure\AdBoard.Infrastructure.csproj" />
+  </ItemGroup>
+	
 </Project>

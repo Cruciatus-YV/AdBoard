@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class FavoriteProductConfigurations : IEntityTypeConfiguration<FavoriteProductEntity>
 {
@@ -13,14 +13,13 @@ public class FavoriteProductConfigurations : IEntityTypeConfiguration<FavoritePr
         builder.HasKey(x => x.Id);
 
         builder.Property(c => c.UserId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(c => c.ProductId)
-            .IsRequired();
-
+               .IsRequired();
 
         builder.HasOne(x => x.Product)
-            .WithMany()
-            .HasForeignKey(x => x.ProductId);
+               .WithMany()
+               .HasForeignKey(x => x.ProductId);
     }
 }

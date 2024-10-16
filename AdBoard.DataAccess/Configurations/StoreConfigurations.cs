@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class StoreConfigurations : IEntityTypeConfiguration<StoreEntity>
 {
@@ -13,27 +13,33 @@ public class StoreConfigurations : IEntityTypeConfiguration<StoreEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Name)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.IsDefault)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Status)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.SellerId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired(false);
+               .IsRequired(false);
 
+        builder.Property(x => x.AvatarId)
+               .IsRequired(false);
+
+        builder.HasOne(x => x.Avatar)
+               .WithOne()
+               .HasForeignKey<StoreEntity>(x => x.AvatarId);
 
         builder.HasOne(x => x.Seller)
-            .WithMany()
-            .HasForeignKey(x => x.SellerId);
+               .WithMany()
+               .HasForeignKey(x => x.SellerId);
 
         builder.HasMany(x => x.Products)
-            .WithOne()
-            .HasForeignKey(x => x.StoreId);
+               .WithOne(x => x.Store)
+               .HasForeignKey(x => x.StoreId);
     }
 }

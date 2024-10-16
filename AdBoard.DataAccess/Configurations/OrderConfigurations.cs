@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class OrderConfigurations : IEntityTypeConfiguration<OrderEntity>
 {
@@ -13,23 +13,24 @@ public class OrderConfigurations : IEntityTypeConfiguration<OrderEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.ConsumerId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.StoreId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Status)
-            .IsRequired();
-
+               .IsRequired();
 
         builder.HasOne(x => x.Consumer)
-            .WithMany()
-            .HasForeignKey(x => x.ConsumerId);
+               .WithMany()
+               .HasForeignKey(x => x.ConsumerId);
 
-        builder.HasOne(x => x.Store);
+        builder.HasOne(x => x.Store)
+               .WithMany()
+               .HasForeignKey(x => x.StoreId);
 
         builder.HasMany(x => x.OrderItems)
-            .WithOne(x => x.Order)
-            .HasForeignKey(x => x.OrderId);
+               .WithOne(x => x.Order)
+               .HasForeignKey(x => x.OrderId);
     }
 }

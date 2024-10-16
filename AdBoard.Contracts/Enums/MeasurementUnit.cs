@@ -1,101 +1,122 @@
 ﻿namespace AdBoard.Contracts.Enums;
 
 /// <summary>
-/// Единицы измерения количества товара
+/// Единицы измерения количества товара.
 /// </summary>
-public enum MesurementUnit
+public enum MeasurementUnit
 {
     /// <summary>
-    /// Единица измерения не определена
+    /// Единица измерения не определена.
     /// </summary>
     None = 0,
+
     /// <summary>
-    /// Киллограмм
+    /// Килограмм.
     /// </summary>
     Kilogram = 1,
+
     /// <summary>
-    /// Грам
+    /// Грамм.
     /// </summary>
     Gram = 2,
+
     /// <summary>
-    /// Тонна
+    /// Тонна.
     /// </summary>
     Ton = 3,
+
     /// <summary>
-    /// Фунт
+    /// Фунт.
     /// </summary>
     Pound = 4,
+
     /// <summary>
-    /// Унция
+    /// Унция.
     /// </summary>
     Ounce = 5,
+
     /// <summary>
-    /// Литр
+    /// Литр.
     /// </summary>
     Liter = 6,
+
     /// <summary>
-    /// Миллилитр
+    /// Миллилитр.
     /// </summary>
-    Mililiter = 7,
+    Milliliter = 7,
+
     /// <summary>
-    /// Кубический метр
+    /// Кубический метр.
     /// </summary>
     CubicMeter = 8,
+
     /// <summary>
-    /// Кубический сантиметр
+    /// Кубический сантиметр.
     /// </summary>
     CubicCentimeter = 9,
+
     /// <summary>
-    /// Штука
+    /// Штука.
     /// </summary>
     Piece = 10,
+
     /// <summary>
-    /// Упаковка
+    /// Упаковка.
     /// </summary>
     Pack = 11,
+
     /// <summary>
-    /// Ящик
+    /// Ящик.
     /// </summary>
     Box = 12,
+
     /// <summary>
-    /// Мешок
+    /// Мешок.
     /// </summary>
     Bag = 13,
+
     /// <summary>
-    /// Бутылка
+    /// Бутылка.
     /// </summary>
     Bottle = 14,
+
     /// <summary>
-    /// Баррель
+    /// Баррель.
     /// </summary>
     Barrel = 15,
+
     /// <summary>
-    /// Галлон
+    /// Галлон.
     /// </summary>
     Gallon = 16,
+
     /// <summary>
-    /// Фут
+    /// Фут.
     /// </summary>
     Foot = 17,
+
     /// <summary>
-    /// Дюйм
+    /// Дюйм.
     /// </summary>
     Inch = 18,
+
     /// <summary>
-    /// Квадратный метр
+    /// Квадратный метр.
     /// </summary>
     SquareMeter = 19,
+
     /// <summary>
-    /// Метр
+    /// Метр.
     /// </summary>
     Meter = 20,
+
     /// <summary>
-    /// Паллета
+    /// Паллета.
     /// </summary>
     Pallet = 21,
+
     /// <summary>
-    /// Карат
+    /// Карат.
     /// </summary>
     Carat = 22,
-
 }

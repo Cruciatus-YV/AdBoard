@@ -1,8 +1,9 @@
 ﻿using AdBoard.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
-namespace AdBoard.DataAccess.Configurations;
+namespace AdBoard.Infrastructure.Configurations;
 
 public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
 {
@@ -13,30 +14,41 @@ public class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Status)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Price)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.StoreId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Count)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(50);
+               .IsRequired()
+               .HasMaxLength(255);
 
         builder.Property(x => x.CategoryId)
-            .IsRequired();
+               .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired(false);
+               .IsRequired(false);
 
+        builder.HasMany(x => x.Feedback)
+               .WithOne(x => x.Product)
+               .HasForeignKey(x => x.ProductId);
 
         builder.HasOne(x => x.Store)
-            .WithMany(x => x.Products)
-            .HasForeignKey(x => x.StoreId);
+               .WithMany(x => x.Products)
+               .HasForeignKey(x => x.StoreId);
+
+        builder.HasOne(x => x.Category)
+               .WithMany(x => x.Products)
+               .HasForeignKey(x => x.CategoryId);
+
+        builder.HasMany(p => p.Images)               // Один продукт имеет много изображений
+               .WithOne()                             // Убираем навигационное свойство, которое связывает FileEntity с ProductEntity
+               .OnDelete(DeleteBehavior.Cascade);    // При удалении продукта удаляем и связанные изображения, если они есть
     }
 }

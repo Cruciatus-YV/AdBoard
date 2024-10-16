@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Entities\FavoriteProduct\Requests\" />
+    <Folder Include="Models\Entities\FavoriteProduct\Responses\" />
+    <Folder Include="Models\Entities\Feedback\Responses\" />
+    <Folder Include="Models\Entities\Feedback\Requests\" />
+    <Folder Include="Models\Entities\OrderItem\Responses\" />
+    <Folder Include="Models\Entities\OrderItem\Requests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
 </Project>
