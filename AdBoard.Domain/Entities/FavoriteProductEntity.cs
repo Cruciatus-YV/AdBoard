@@ -3,22 +3,22 @@
 namespace AdBoard.Domain.Entities;
 
 /// <summary>
-/// Сущность связи пользователя с понравившимся товаром
+/// Сущность связи пользователя с понравившимся товаром.
 /// </summary>
 public class FavoriteProductEntity : CreatableEntity<long>
 {
     /// <summary>
-    /// Идентификатор пользователя
+    /// Идентификатор пользователя.
     /// </summary>
     public required string UserId { get; set; }
+
     /// <summary>
-    /// Идентификатор понравившегося товара
+    /// Идентификатор понравившегося товара.
     /// </summary>
     public required long ProductId { get; set; }
 
-
     /// <summary>
-    /// Понравившийся товар
+    /// Понравившийся товар.
     /// </summary>
     public virtual ProductEntity Product { get; set; }
 }

@@ -3,22 +3,37 @@
 namespace AdBoard.Domain.Entities;
 
 /// <summary>
-/// Сущность категории товара
+/// Сущность категории товара.
 /// </summary>
 public class CategoryEntity : BaseEntity<long>
 {
     /// <summary>
-    /// Название категории
+    /// Название категории.
     /// </summary>
     public required string Name { get; set; }
+
     /// <summary>
-    /// Идентификатор родительской категории
+    /// Идентификатор родительской категории.
     /// </summary>
     public long? ParentId { get; set; }
 
+    /// <summary>
+    /// Флаг удаления категории.
+    /// </summary>
+    public bool IsDeleted { get; set; }
 
     /// <summary>
-    /// Подкатегории
+    /// Статус одобрения создания категории
     /// </summary>
-    public virtual List<CategoryEntity> ChildCategories { get; set; }
+    public bool Approved { get; set; }
+
+    /// <summary>
+    /// Список продуктов категории.
+    /// </summary>
+    public virtual List<ProductEntity> Products { get; set; } = [];
+
+    /// <summary>
+    /// Подкатегории.
+    /// </summary>
+    public virtual List<CategoryEntity> ChildCategories { get; set; } = [];
 }

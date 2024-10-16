@@ -1,13 +1,14 @@
 ﻿namespace AdBoard.Domain.Base;
 
 /// <summary>
-/// Базовая сущность. Имеет только идентификатор.
+/// Базовый класс для сущностей, содержащий только идентификатор.
+/// Используется для обеспечения общей структуры всех сущностей в доменной модели.
 /// </summary>
-/// <typeparam name="TId">Тип данных идентификатора</typeparam>
+/// <typeparam name="TId">Тип данных идентификатора сущности.</typeparam>
 public abstract class BaseEntity<TId>
 {
     /// <summary>
-    /// Идентификатор
+    /// Идентификатор сущности.
     /// </summary>
-    public required TId Id { get; set; }
+    public TId Id { get; set; }
 }

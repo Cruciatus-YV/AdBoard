@@ -4,31 +4,37 @@ using AdBoard.Domain.Base;
 namespace AdBoard.Domain.Entities;
 
 /// <summary>
-/// Сущность заказа в определённом магазине
+/// Сущность заказа в определённом магазине.
 /// </summary>
 public class OrderEntity : MutableEntity<long>
 {
     /// <summary>
-    /// Идентификатор покупателя
+    /// Идентификатор покупателя.
     /// </summary>
     public required string ConsumerId { get; set; }
+
     /// <summary>
-    /// Идентификатор магазина
+    /// Идентификатор магазина.
     /// </summary>
     public required long StoreId { get; set; }
+
     /// <summary>
-    /// Статус заказа
+    /// Статус заказа.
     /// </summary>
     public OrderStatus Status { get; set; }
 
-
     /// <summary>
-    /// Покупатель
+    /// Покупатель.
     /// </summary>
     public virtual UserEntity Consumer { get; set; }
+
     /// <summary>
-    /// Магазин
+    /// Магазин.
     /// </summary>
     public virtual StoreEntity Store { get; set; }
 
+    /// <summary>
+    /// Позиции в заказе.
+    /// </summary>
+    public virtual List<OrderItemEntity> OrderItems { get; set; } = [];
 }
