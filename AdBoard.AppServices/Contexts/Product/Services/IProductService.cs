@@ -49,7 +49,7 @@ public interface IProductService
     /// <param name="id">Идентификатор продукта.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>True, если продукт был успешно удален; в противном случае False.</returns>
-    Task<bool> DeleteAsync(long id, CancellationToken cancellationToken);
+    Task<bool> DeleteAsync(long id, UserContextLight userContext, CancellationToken cancellationToken);
 
     /// <summary>
     /// Обновляет количество продуктов.

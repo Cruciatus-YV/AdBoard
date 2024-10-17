@@ -77,8 +77,19 @@ public class ProductService : IProductService
 
     }
 
-    public async Task<bool> DeleteAsync(long id, CancellationToken cancellationToken)
+    public async Task<bool> DeleteAsync(long id, UserContextLight userContext, CancellationToken cancellationToken)
     {
+        var product = await _productRepository.GetByIdWithStore(id, cancellationToken);
+
+        if (product == null)
+        {
+            throw new NotFoundException("Cущность не найдена.");
+        }
+        else if (!userContext.IsSuperAdmin && !userContext.IsSuperManager && !(userContext.Id == product.Store.SellerId))
+        {
+            throw new Exception("Нет доступа");
+        }
+
         return await _productRepository.DeleteProductAsync(id, cancellationToken);
     }
 
