@@ -22,6 +22,10 @@ namespace AdBoard.DataAccess.Repositories;
 /// </summary>
 public class ProductRepository(AdBoardDbContext dbContext) : GenericRepository<ProductEntity, long>(dbContext), IProductRepository
 {
+    public async Task<ProductEntity?> GetByIdWithStore(long id, CancellationToken cancellationToken)
+    {
+        return await _asNoTracking.Include(x => x.Store).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
     public async Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken)
     {
         return await _asNoTracking.Include(x => x.Images).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);

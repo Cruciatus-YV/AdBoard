@@ -13,6 +13,20 @@ namespace AdBoard.AppServices.Contexts.Product.Repositories;
 /// </summary>
 public interface IProductRepository : IGenericRepository<ProductEntity, long>
 {
+    /// <summary>
+    /// Получает товар с магазином.
+    /// </summary>
+    /// <param name="id">Идентификатор товара</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns></returns>
+    Task<ProductEntity?> GetByIdWithStore(long id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получает товар с изображениями.
+    /// </summary>
+    /// <param name="id">Идентификатор товара</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns></returns>
     Task<ProductEntity?> GetByIdWithImages(long id, CancellationToken cancellationToken);
 
     /// <summary>

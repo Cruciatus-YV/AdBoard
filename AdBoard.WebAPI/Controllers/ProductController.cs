@@ -124,7 +124,7 @@ public class ProductController : AdBoardBaseController
     [HttpDelete("{id:long}")]
     public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
     {
-        await _productService.DeleteAsync(id, cancellationToken);
+        await _productService.DeleteAsync(id, GetUserContextLigth(), cancellationToken);
         return Ok();
     }
 }
