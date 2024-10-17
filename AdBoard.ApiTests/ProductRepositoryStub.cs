@@ -43,6 +43,11 @@ public class ProductRepositoryStub : IProductRepository
         throw new NotImplementedException();
     }
 
+    public Task<ProductEntity?> GetByIdWithStore(long id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<ProductEntity?> GetByPredicate(Expression<Func<ProductEntity, bool>> predicate, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
